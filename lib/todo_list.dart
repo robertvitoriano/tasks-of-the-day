@@ -9,19 +9,7 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  List<Map<String, dynamic>> todosInfo = [
-    {
-      'id': 1,
-      "text": "Aprender gerenciamento básico de estado",
-      'value': false,
-    },
-    {'id': 2, "text": "Renderizar componentes dinamicamente", 'value': false},
-    {
-      'id': 3,
-      "text": "Entender como passar funções personalizadas por parametro",
-      'value': false,
-    },
-  ];
+  List<Map<String, dynamic>> todosInfo = [];
 
   bool isTodoCreationModalOpen = false;
 
