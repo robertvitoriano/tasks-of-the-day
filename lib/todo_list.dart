@@ -9,12 +9,32 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  bool checkboxValue = false;
+  List<Map<String, dynamic>> todosInfo = [
+    {
+      'id': 1,
+      "text": "Aprender gerenciamento básico de estado",
+      'value': false,
+    },
+    {'id': 2, "text": "Renderizar componentes dinamicamente", 'value': false},
+  ];
 
-  void _onChanged(bool? value) {
-    setState(() {
-      checkboxValue = !checkboxValue;
-    });
+  void _onChanged(bool? value) {}
+
+  List<Widget> getListOfTodos() {
+    List<Widget> todos = [];
+
+    for (var i = 0; i < todosInfo.length; i++) {
+      todos.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Checkbox(value: todosInfo[i]["value"], onChanged: _onChanged),
+            Text(todosInfo[i]["text"], style: TextStyle(color: Colors.white)),
+          ],
+        ),
+      );
+    }
+    return todos;
   }
 
   void _openTodoCreationModal() {}
@@ -31,28 +51,7 @@ class _TodoListState extends State<TodoList> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Checkbox(value: checkboxValue, onChanged: _onChanged),
-                Text(
-                  "Aprender gerenciamento básico de estado",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Checkbox(value: checkboxValue, onChanged: _onChanged),
-                Text(
-                  "Renderizar componentes dinamicamente",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ],
+          children: getListOfTodos(),
         ),
       ),
       floatingActionButton: FloatingActionButton(
