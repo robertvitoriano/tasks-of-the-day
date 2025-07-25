@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/new_todo_modal.dart';
+import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
 
 class TodoList extends StatefulWidget {
   const TodoList({super.key, required this.title});
