@@ -10,11 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Todo',
+      color: Colors.white,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Todo'),
     );
   }
 }
@@ -28,40 +29,59 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  bool checkboxValue = false;
 
-  void _incrementCounter() {
+  void _onChanged(bool? value) {
     setState(() {
-      _counter++;
+      checkboxValue = !checkboxValue;
     });
   }
+  
+
+  void _openTodoCreationModal() {}
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.white,
         title: Text(widget.title),
+        titleTextStyle: TextStyle(color: Colors.black),
       ),
+      backgroundColor: Colors.black,
       body: Center(
-        
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Checkbox(value: checkboxValue, onChanged: _onChanged),
+                Text(
+                  "Aprender gerenciamento básico de estado",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Checkbox(value: checkboxValue, onChanged: _onChanged),
+                Text(
+                  "Renderizar componentes dinamicamente",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _openTodoCreationModal,
+        backgroundColor: Colors.white,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), 
+      ),
     );
   }
 }
