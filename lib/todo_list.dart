@@ -22,8 +22,10 @@ class _TodoListState extends State<TodoList> {
       'value': false,
     },
   ];
+  
+  bool isTodoCreationModalOpen = false;
 
-  void _onChanged(int index, bool? value) {
+  void onChanged(int index, bool? value) {
     setState(() {
       todosInfo[index]["value"] = value;
     });
@@ -36,10 +38,10 @@ class _TodoListState extends State<TodoList> {
       todos.add(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             Checkbox(
               value: todosInfo[i]["value"],
-              onChanged: (bool? newValue) => _onChanged(i, newValue),
+              onChanged: (bool? newValue) => onChanged(i, newValue),
             ),
             Text(todosInfo[i]["text"], style: TextStyle(color: Colors.white)),
           ],
@@ -49,7 +51,11 @@ class _TodoListState extends State<TodoList> {
     return todos;
   }
 
-  void _openTodoCreationModal() {}
+  void _openTodoCreationModal() {
+    setState(() {
+      isTodoCreationModalOpen = !isTodoCreationModalOpen;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +69,14 @@ class _TodoListState extends State<TodoList> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: getListOfTodos(),
+          children: !isTodoCreationModalOpen ? getListOfTodos() : [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Criar novo todo",),
+              ],
+            )
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
