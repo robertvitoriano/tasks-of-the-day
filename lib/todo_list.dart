@@ -16,9 +16,18 @@ class _TodoListState extends State<TodoList> {
       'value': false,
     },
     {'id': 2, "text": "Renderizar componentes dinamicamente", 'value': false},
+    {
+      'id': 3,
+      "text": "Entender como passar funções personalizadas por parametro",
+      'value': false,
+    },
   ];
 
-  void _onChanged(bool? value) {}
+  void _onChanged(int index, bool? value) {
+    setState(() {
+      todosInfo[index]["value"] = value;
+    });
+  }
 
   List<Widget> getListOfTodos() {
     List<Widget> todos = [];
@@ -28,7 +37,10 @@ class _TodoListState extends State<TodoList> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Checkbox(value: todosInfo[i]["value"], onChanged: _onChanged),
+            Checkbox(
+              value: todosInfo[i]["value"],
+              onChanged: (bool? newValue) => _onChanged(i, newValue),
+            ),
             Text(todosInfo[i]["text"], style: TextStyle(color: Colors.white)),
           ],
         ),
