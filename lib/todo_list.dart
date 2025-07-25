@@ -60,7 +60,7 @@ class _TodoListState extends State<TodoList> {
   void _saveTodo(){
     setState(() {
       todosInfo.add({
-        "id": todosInfo.length++,
+        "id": todosInfo.length + 1,
         "value": false,
         "text":_todoCreationController.text.trim()
       });
