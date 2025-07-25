@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class NewTodoModal extends StatefulWidget {
+  
   const NewTodoModal({
   super.key, 
   required this.title,
   required this.onSave,
   });
+  
   final String title;
   final void Function(String text) onSave;
 
@@ -14,10 +16,6 @@ class NewTodoModal extends StatefulWidget {
 }
 
 class _NewTodoModalState extends State<NewTodoModal> {
-  List<Map<String, dynamic>> todosInfo = [];
-
-  bool isNewTodoModalModalOpen = false;
-
   final TextEditingController _newTodoModalController = TextEditingController();
   
   void _saveTodo() {
