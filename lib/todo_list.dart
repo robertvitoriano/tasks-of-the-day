@@ -22,7 +22,7 @@ class _TodoListState extends State<TodoList> {
       'value': false,
     },
   ];
-  
+
   bool isTodoCreationModalOpen = false;
 
   void onChanged(int index, bool? value) {
@@ -51,11 +51,24 @@ class _TodoListState extends State<TodoList> {
     return todos;
   }
 
-  void _openTodoCreationModal() {
+  void _toggleTodoOpenModal() {
     setState(() {
       isTodoCreationModalOpen = !isTodoCreationModalOpen;
     });
   }
+  
+  void _saveTodo(){
+    setState(() {
+      todosInfo.add({
+        "id": todosInfo.length++,
+        "value": false,
+        "text":_todoCreationController.text.trim()
+      });
+    });
+    _toggleTodoOpenModal();
+  }
+  
+  final TextEditingController _todoCreationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,20 +80,38 @@ class _TodoListState extends State<TodoList> {
       ),
       backgroundColor: Colors.black,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: !isTodoCreationModalOpen ? getListOfTodos() : [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Criar novo todo",),
-              ],
-            )
-          ],
-        ),
+        child: isTodoCreationModalOpen
+            ? Container(
+                width: 300,
+                height: 600,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      "Criar novo todo",
+                      style: TextStyle(fontSize: 36, color: Colors.black),
+                    ),
+                    TextField(
+                      controller: _todoCreationController,
+                      decoration: InputDecoration(
+                        hintText: "Digite seu novo todo",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    ElevatedButton(onPressed:_saveTodo, child: Text("Salvar")),
+                  ],
+                ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: getListOfTodos(),
+              ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _openTodoCreationModal,
+        onPressed: _toggleTodoOpenModal,
         backgroundColor: Colors.white,
         tooltip: 'Create new todo',
         child: const Icon(Icons.add),
