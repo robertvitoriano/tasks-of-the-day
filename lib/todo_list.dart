@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/new_todo_modal.dart';
 
 class TodoList extends StatefulWidget {
   const TodoList({super.key, required this.title});
@@ -44,19 +45,13 @@ class _TodoListState extends State<TodoList> {
       isTodoCreationModalOpen = !isTodoCreationModalOpen;
     });
   }
-  
-  void _saveTodo(){
+
+  void _saveTodo(String text) {
     setState(() {
-      todosInfo.add({
-        "id": todosInfo.length + 1,
-        "value": false,
-        "text":_todoCreationController.text.trim()
-      });
+      todosInfo.add({"id": todosInfo.length + 1, "value": false, "text": text});
     });
     _toggleTodoOpenModal();
   }
-  
-  final TextEditingController _todoCreationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,29 +64,9 @@ class _TodoListState extends State<TodoList> {
       backgroundColor: Colors.black,
       body: Center(
         child: isTodoCreationModalOpen
-            ? Container(
-                width: 300,
-                height: 600,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      "Criar novo todo",
-                      style: TextStyle(fontSize: 36, color: Colors.black),
-                    ),
-                    TextField(
-                      controller: _todoCreationController,
-                      decoration: InputDecoration(
-                        hintText: "Digite seu novo todo",
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    ElevatedButton(onPressed:_saveTodo, child: Text("Salvar")),
-                  ],
-                ),
+            ? NewTodoModal(
+                title: "Create todo",
+                onSave: (text) => _saveTodo(text),
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
