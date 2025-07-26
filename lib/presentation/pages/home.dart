@@ -10,47 +10,44 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  List<Map<String, dynamic>> todosInfo = [];
+  
+  List<Map<String, dynamic>> todoLists = [];
 
   bool isTodoCreationModalOpen = false;
 
   void onChanged(int index, bool? value) {
     setState(() {
-      todosInfo[index]["value"] = value;
+      todoLists[index]["title"] = value;
     });
   }
 
-  List<Widget> getListOfTodos() {
-    List<Widget> todos = [];
+  List<Widget> getTodoLists() {
+    List<Widget> lists = [];
 
-    for (var i = 0; i < todosInfo.length; i++) {
-      todos.add(
+    for (var i = 0; i < todoLists.length; i++) {
+      lists.add(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Checkbox(
-              value: todosInfo[i]["value"],
-              onChanged: (bool? newValue) => onChanged(i, newValue),
-            ),
-            Text(todosInfo[i]["text"], style: TextStyle(color: Colors.white)),
+            Text(todoLists[i]["title"], style: TextStyle(color: Colors.white)),
           ],
         ),
       );
     }
-    return todos;
+    return lists;
   }
 
-  void _toggleTodoOpenModal() {
+  void _toggleTodoCreationModal() {
     setState(() {
       isTodoCreationModalOpen = !isTodoCreationModalOpen;
     });
   }
 
-  void _saveTodo(String text) {
+  void _saveTodoList(String text) {
     setState(() {
-      todosInfo.add({"id": todosInfo.length + 1, "value": false, "text": text});
+      todoLists.add({"id": todoLists.length + 1,  "title": text});
     });
-    _toggleTodoOpenModal();
+    _toggleTodoCreationModal();
   }
 
   @override
@@ -65,16 +62,16 @@ class _TodoListState extends State<TodoList> {
       body: Center(
         child: isTodoCreationModalOpen
             ? CreationModal(
-                title: "Create Todo Item",
-                onSave: (text) => _saveTodo(text),
+                title: "Create Todo List",
+                onSave: (text) => _saveTodoList(text),
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: getListOfTodos(),
+                children: getTodoLists(),
               ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _toggleTodoOpenModal,
+        onPressed: _toggleTodoCreationModal,
         backgroundColor: Colors.white,
         tooltip: 'Create new todo',
         child: const Icon(Icons.add),

@@ -11,12 +11,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: const TodoList(title: 'Flutter Todo'),
       title: 'Flutter Todo',
       color: Colors.white,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
       ),
-      home: const TodoList(title: 'Flutter Todo'),
+      routes: <String, WidgetBuilder>{
+      '/todo-list': (BuildContext context) => const TodoList(title: 'Flutter Todo'),
+      }
     );
   }
 }
