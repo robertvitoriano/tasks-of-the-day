@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
 
-class TodoList extends StatefulWidget {
-  const TodoList({super.key, required this.title});
+class Home extends StatefulWidget {
+  const Home({super.key, required this.title});
   final String title;
 
   @override
-  State<TodoList> createState() => _TodoListState();
+  State<Home> createState() => _HomeState();
 }
 
-class _TodoListState extends State<TodoList> {
-  
+class _HomeState extends State<Home> {
+
   List<Map<String, dynamic>> todoLists = [];
 
   bool isTodoCreationModalOpen = false;
@@ -25,6 +25,7 @@ class _TodoListState extends State<TodoList> {
     List<Widget> lists = [];
 
     for (var i = 0; i < todoLists.length; i++) {
+
       lists.add(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

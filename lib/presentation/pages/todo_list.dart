@@ -10,29 +10,29 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  List<Map<String, dynamic>> todosInfo = [];
+ final List<Map<String, dynamic>> _todos = [];
 
   bool isTodoCreationModalOpen = false;
 
   void onChanged(int index, bool? value) {
     setState(() {
-      todosInfo[index]["value"] = value;
+      _todos[index]["value"] = value;
     });
   }
 
   List<Widget> getListOfTodos() {
     List<Widget> todos = [];
 
-    for (var i = 0; i < todosInfo.length; i++) {
+    for (var i = 0; i < _todos.length; i++) {
       todos.add(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Checkbox(
-              value: todosInfo[i]["value"],
+              value: _todos[i]["value"],
               onChanged: (bool? newValue) => onChanged(i, newValue),
             ),
-            Text(todosInfo[i]["text"], style: TextStyle(color: Colors.white)),
+            Text(_todos[i]["text"], style: TextStyle(color: Colors.white)),
           ],
         ),
       );
@@ -48,7 +48,7 @@ class _TodoListState extends State<TodoList> {
 
   void _saveTodo(String text) {
     setState(() {
-      todosInfo.add({"id": todosInfo.length + 1, "value": false, "text": text});
+      _todos.add({"id": _todos.length + 1, "value": false, "text": text});
     });
     _toggleTodoOpenModal();
   }

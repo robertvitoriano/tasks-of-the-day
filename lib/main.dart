@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/presentation/pages/home.dart';
 import 'package:flutter_todo/presentation/pages/todo_list.dart';
 
 void main() {
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const TodoList(title: 'Flutter Todo'),
+      debugShowCheckedModeBanner: false,
+      home: const Home(title: 'Flutter Todo'),
       title: 'Flutter Todo',
       color: Colors.white,
       theme: ThemeData(
