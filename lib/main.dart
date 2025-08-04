@@ -19,9 +19,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
       ),
-      routes: <String, WidgetBuilder>{
-      '/todo-list': (BuildContext context) => const TodoList(title: 'Flutter Todo'),
-      }
     );
   }
 }
