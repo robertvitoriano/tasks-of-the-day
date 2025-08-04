@@ -1,6 +1,24 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/presentation/pages/todo_list.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
+
+/// Model for a single todo item
+class TodoItem {
+  int id;
+  String text;
+  bool value;
+  TodoItem({required this.id, required this.text, this.value = false});
+}
+
+/// Model for a todo list
+class TodoListModel {
+  int id;
+  String title;
+  List<TodoItem> items;
+  TodoListModel({required this.id, required this.title, List<TodoItem>? items})
+      : items = items ?? [];
+}
 
 class Home extends StatefulWidget {
   const Home({super.key, required this.title});
@@ -11,98 +29,72 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Map<String, dynamic>> todoLists = [];
+  /// List of todo lists
+  final List<TodoListModel> todoLists = [];
 
   bool isTodoCreationModalOpen = false;
   int? _selectedTodoIndex;
   
-  void selectTodo(int index){
-    setState(()=>
-      _selectedTodoIndex = index
-    );
+  /// Select a todo list by index
+  void selectTodo(int index) {
+    setState(() => _selectedTodoIndex = index);
   }
    
+  /// Returns a list of widgets for each todo list
   List<Widget> getTodoLists() {
-    List<Widget> lists = [];
-
+    final List<Widget> lists = [];
     for (var i = 0; i < todoLists.length; i++) {
       lists.add(
         GestureDetector(
-          onTap:()=> _selectedTodoIndex = i ,
-        child: Card(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              todoLists[i]["title"],
-              style: TextStyle(color: Colors.black),
+          onTap: () => setState(() => _selectedTodoIndex = i),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                todoLists[i].title,
+                style: const TextStyle(color: Colors.black),
+              ),
             ),
           ),
-        )),
+        ),
       );
     }
     return lists;
   }
+  /// Handles checkbox change for todo items
   void onChanged(int index, bool? value) {
+    if (_selectedTodoIndex == null) return;
     setState(() {
-      todoLists[_selectedTodoIndex!]["items"][index]["value"] = value;
+      todoLists[_selectedTodoIndex!].items[index].value = value ?? false;
     });
   }
+  /// Save a new todo list
   void _saveTodoList(String text) {
     setState(() {
-      todoLists.add({"id": todoLists.length + 1, "title": text, "items": []});
+      todoLists.add(TodoListModel(id: todoLists.length + 1, title: text));
     });
     _toggleTodoCreationModal();
   }
 
+  /// Save a new todo item to the selected list
   void _saveTodoItem(String text) {
     if (_selectedTodoIndex == null) return;
     setState(() {
-      // Ensure items is initialized
-      todoLists[_selectedTodoIndex!]["items"] ??= [];
-      todoLists[_selectedTodoIndex!]["items"].add({
-        "id": todoLists[_selectedTodoIndex!]["items"].length + 1,
-        "value": false,
-        "text": text,
-      });
+      final items = todoLists[_selectedTodoIndex!].items;
+      items.add(TodoItem(id: items.length + 1, text: text));
     });
     _toggleTodoCreationModal();
   }
-  
-  
-  List<Widget> getSelectedTodoItems(){
-    final selectedTodo = todoLists[_selectedTodoIndex!];
-    List<Widget> todoItems = [];
-    if(_selectedTodoIndex != null){
-      for(int i= 0; i < selectedTodo["items"].length; i++){
-        todoItems.add(        
-          Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Checkbox(
-              value: selectedTodo["items"][i]["value"],
-              onChanged: (bool? newValue) => onChanged(i, newValue),
-            ),
-            Text(selectedTodo["items"][i]["text"], style: TextStyle(color: Colors.white)),
-          ],
-        ));
-      }
-    }
-    
-    return todoItems;
-  }
+  // Removed unused getSelectedTodoItems method
 
+  /// Toggle the creation modal
   void _toggleTodoCreationModal() {
     setState(() {
       isTodoCreationModalOpen = !isTodoCreationModalOpen;
     });
   }
 
-  void _saveTodo(String text) {
-    setState(() {
-      todoLists.add({"id": todoLists.length + 1, "title": text, "items": []});
-    });
-    _toggleTodoCreationModal();
-  }
+  // Removed redundant _saveTodo method
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +103,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         leading: _selectedTodoIndex != null
             ? IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.black),
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
                 onPressed: () {
                   setState(() {
                     _selectedTodoIndex = null;
@@ -120,7 +112,7 @@ class _HomeState extends State<Home> {
               )
             : null,
         title: Text(widget.title),
-        titleTextStyle: TextStyle(color: Colors.black),
+        titleTextStyle: const TextStyle(color: Colors.black),
       ),
       backgroundColor: Colors.black,
       body: _selectedTodoIndex == null
@@ -128,7 +120,7 @@ class _HomeState extends State<Home> {
               child: isTodoCreationModalOpen
                   ? CreationModal(
                       title: "Create Todo List",
-                      onSave: (text) => _saveTodoList(text),
+                      onSave: (String text) => _saveTodoList(text),
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -139,12 +131,12 @@ class _HomeState extends State<Home> {
               ? Center(
                   child: CreationModal(
                     title: "Create Todo Item",
-                    onSave: (text) => _saveTodoItem(text),
+                    onSave: (String text) => _saveTodoItem(text),
                   ),
                 )
               : TodoList(
-                  title: todoLists[_selectedTodoIndex!]["title"],
-                  todos: todoLists[_selectedTodoIndex!]["items"],
+                  title: todoLists[_selectedTodoIndex!].title,
+                  todos: todoLists[_selectedTodoIndex!].items,
                 ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleTodoCreationModal,
