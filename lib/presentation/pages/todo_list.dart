@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/presentation/pages/home.dart';
+import 'package:flutter_todo/domain/entities/todo_item.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
 
 class TodoItemsList extends StatefulWidget {
   const TodoItemsList({super.key, required this.title, required this.todos});
   final String title;
-  final List<TodoItemModel> todos;
+  final List<TodoItem> todos;
 
   @override
   State<TodoItemsList> createState() => _TodoItemsListState();
@@ -48,7 +48,7 @@ class _TodoItemsListState extends State<TodoItemsList> {
 
   void _saveTodo(String text) {
     setState(() {
-        widget.todos.add(TodoItemModel(id:widget.todos.length + 1 , text: text,value: false));
+        widget.todos.add(TodoItem(id:widget.todos.length + 1 , text: text,value: false));
     });
     _toggleTodoOpenModal();
   }

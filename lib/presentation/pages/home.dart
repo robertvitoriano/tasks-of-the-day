@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/domain/entities/todo_item.dart';
+import 'package:flutter_todo/domain/entities/todo_list.dart';
 import 'package:flutter_todo/presentation/pages/todo_list.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
-class TodoItemModel {
-  int id;
-  String text;
-  bool value;
-  TodoItemModel({required this.id, required this.text, this.value = false});
-}
-
-class TodoListModel {
-  int id;
-  String title;
-  List<TodoItemModel> items;
-  TodoListModel({required this.id, required this.title, List<TodoItemModel>? items})
-    : items = items ?? [];
-}
 
 class Home extends StatefulWidget {
   const Home({super.key, required this.title});
@@ -25,8 +13,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<TodoListModel> todoLists = [];
-
+  final List<TodoList> todoLists = [];
+  
   bool isTodoCreationModalOpen = false;
   int? _selectedTodoIndex;
 
@@ -64,7 +52,7 @@ class _HomeState extends State<Home> {
 
   void _saveTodoList(String text) {
     setState(() {
-      todoLists.add(TodoListModel(id: todoLists.length + 1, title: text));
+      todoLists.add(TodoList(id: todoLists.length + 1, title: text));
     });
     _toggleTodoCreationModal();
   }
@@ -73,7 +61,7 @@ class _HomeState extends State<Home> {
     if (_selectedTodoIndex == null) return;
     setState(() {
       final items = todoLists[_selectedTodoIndex!].items;
-      items.add(TodoItemModel(id: items.length + 1, text: text));
+      items.add(TodoItem(id: items.length + 1, text: text));
     });
     _toggleTodoCreationModal();
   }
