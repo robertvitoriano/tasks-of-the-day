@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Widget _getRendering() {
+  Widget _buildBodyContent() {
     
     bool isSomeTodoListSelected = _selectedTodoIndex != null;
         
@@ -122,7 +122,7 @@ class _HomeState extends State<Home> {
         titleTextStyle: const TextStyle(color: Colors.black),
       ),
       backgroundColor: Colors.black,
-      body: _getRendering(),
+      body: _buildBodyContent(),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleTodoCreationModal,
         backgroundColor: Colors.white,
