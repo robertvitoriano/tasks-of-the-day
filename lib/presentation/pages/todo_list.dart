@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/presentation/pages/home.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
 
-class TodoList extends StatefulWidget {
-  const TodoList({super.key, required this.title, required this.todos});
+class TodoItemsList extends StatefulWidget {
+  const TodoItemsList({super.key, required this.title, required this.todos});
   final String title;
   final List<TodoItemModel> todos;
 
   @override
-  State<TodoList> createState() => _TodoListState();
+  State<TodoItemsList> createState() => _TodoItemsListState();
 }
 
-class _TodoListState extends State<TodoList> {
+class _TodoItemsListState extends State<TodoItemsList> {
   bool isTodoCreationModalOpen = false;
 
   void onChanged(int index, bool value) {

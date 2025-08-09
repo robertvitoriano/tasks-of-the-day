@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Home(title: 'Flutter Todo'),
-      title: 'Flutter Todo',
+    home: const Home(title: 'Tasks of the day'),
+    title: 'Tasks of the day',
       color: Colors.white,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
