@@ -55,7 +55,7 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     return Center(
       child: isTodoCreationModalOpen
-          ? CreationModal(
+          ? NewTodoModal(
               title: "Create Todo Item",
               onSave: (text) => _saveTodo(text),
             )

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/presentation/pages/todo_list.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
@@ -17,7 +16,7 @@ class TodoListModel {
   String title;
   List<TodoItem> items;
   TodoListModel({required this.id, required this.title, List<TodoItem>? items})
-      : items = items ?? [];
+    : items = items ?? [];
 }
 
 class Home extends StatefulWidget {
@@ -34,12 +33,12 @@ class _HomeState extends State<Home> {
 
   bool isTodoCreationModalOpen = false;
   int? _selectedTodoIndex;
-  
+
   /// Select a todo list by index
   void selectTodo(int index) {
     setState(() => _selectedTodoIndex = index);
   }
-   
+
   /// Returns a list of widgets for each todo list
   List<Widget> getTodoLists() {
     final List<Widget> lists = [];
@@ -61,14 +60,14 @@ class _HomeState extends State<Home> {
     }
     return lists;
   }
-  /// Handles checkbox change for todo items
+
   void onChanged(int index, bool? value) {
     if (_selectedTodoIndex == null) return;
     setState(() {
       todoLists[_selectedTodoIndex!].items[index].value = value ?? false;
     });
   }
-  /// Save a new todo list
+
   void _saveTodoList(String text) {
     setState(() {
       todoLists.add(TodoListModel(id: todoLists.length + 1, title: text));
@@ -76,7 +75,6 @@ class _HomeState extends State<Home> {
     _toggleTodoCreationModal();
   }
 
-  /// Save a new todo item to the selected list
   void _saveTodoItem(String text) {
     if (_selectedTodoIndex == null) return;
     setState(() {
@@ -85,16 +83,43 @@ class _HomeState extends State<Home> {
     });
     _toggleTodoCreationModal();
   }
-  // Removed unused getSelectedTodoItems method
 
-  /// Toggle the creation modal
   void _toggleTodoCreationModal() {
     setState(() {
       isTodoCreationModalOpen = !isTodoCreationModalOpen;
     });
   }
 
-  // Removed redundant _saveTodo method
+  Widget _getRendering() {
+    
+    bool isSomeTodoListSelected = _selectedTodoIndex != null;
+    
+    if (!isSomeTodoListSelected) {
+      return Center(
+        child: isTodoCreationModalOpen
+            ? NewTodoModal(
+                title: "Create Todo List",
+                onSave: (String text) => _saveTodoList(text),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [SizedBox(height: 20), ...getTodoLists()],
+              ),
+      );
+    }
+    
+    return Center(
+      child: isTodoCreationModalOpen
+          ? NewTodoModal(
+              title: "Create Todo Item",
+              onSave: (String text) => _saveTodoItem(text),
+            )
+          : TodoList(
+              title: todoLists[_selectedTodoIndex!].title,
+              todos: todoLists[_selectedTodoIndex!].items,
+            ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,29 +140,7 @@ class _HomeState extends State<Home> {
         titleTextStyle: const TextStyle(color: Colors.black),
       ),
       backgroundColor: Colors.black,
-      body: _selectedTodoIndex == null
-          ? Center(
-              child: isTodoCreationModalOpen
-                  ? CreationModal(
-                      title: "Create Todo List",
-                      onSave: (String text) => _saveTodoList(text),
-                    )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [SizedBox(height: 20), ...getTodoLists()],
-                    ),
-            )
-          : isTodoCreationModalOpen
-              ? Center(
-                  child: CreationModal(
-                    title: "Create Todo Item",
-                    onSave: (String text) => _saveTodoItem(text),
-                  ),
-                )
-              : TodoList(
-                  title: todoLists[_selectedTodoIndex!].title,
-                  todos: todoLists[_selectedTodoIndex!].items,
-                ),
+      body: _getRendering(),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleTodoCreationModal,
         backgroundColor: Colors.white,

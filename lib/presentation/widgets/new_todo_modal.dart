@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class CreationModal extends StatefulWidget {
-  const CreationModal({super.key, required this.title, required this.onSave});
+class NewTodoModal extends StatefulWidget {
+  const NewTodoModal({super.key, required this.title, required this.onSave});
 
   final String title;
   final void Function(String text) onSave;
 
   @override
-  State<CreationModal> createState() => _CreationModalState();
+  State<NewTodoModal> createState() => _NewTodoModalState();
 }
 
-class _CreationModalState extends State<CreationModal> {
-  final TextEditingController _creationModalController = TextEditingController();
+class _NewTodoModalState extends State<NewTodoModal> {
+  final TextEditingController _newTodoModalController = TextEditingController();
 
   void _saveTodo() {
-    final text = _creationModalController.text.trim();
+    final text = _newTodoModalController.text.trim();
     if (text.isNotEmpty) {
       widget.onSave(text);
     }
@@ -36,7 +36,7 @@ class _CreationModalState extends State<CreationModal> {
             style: TextStyle(fontSize: 36, color: Colors.black),
           ),
           TextField(
-            controller: _creationModalController,
+            controller: _newTodoModalController,
             decoration: InputDecoration(
               hintText: "Digite seu novo todo",
               border: OutlineInputBorder(),
