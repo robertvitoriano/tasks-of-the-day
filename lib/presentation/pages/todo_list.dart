@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/presentation/pages/home.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
 
 class TodoList extends StatefulWidget {
   const TodoList({super.key, required this.title, required this.todos});
   final String title;
-  final List<dynamic> todos;
+  final List<TodoItemModel> todos;
 
   @override
   State<TodoList> createState() => _TodoListState();
@@ -13,24 +14,25 @@ class TodoList extends StatefulWidget {
 class _TodoListState extends State<TodoList> {
   bool isTodoCreationModalOpen = false;
 
-  void onChanged(int index, bool? value) {
+  void onChanged(int index, bool value) {
     setState(() {
-      widget.todos[index]["value"] = value;
+      widget.todos[index].value = value;
     });
   }
 
   List<Widget> getListOfTodos() {
     List<Widget> todos = [];
+    print(widget.todos);
     for (var i = 0; i < widget.todos.length; i++) {
       todos.add(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Checkbox(
-              value: widget.todos[i]["value"],
-              onChanged: (bool? newValue) => onChanged(i, newValue),
+              value: widget.todos[i].value,
+              onChanged: (bool? newValue) => onChanged(i, newValue!),
             ),
-            Text(widget.todos[i]["text"], style: TextStyle(color: Colors.white)),
+            Text(widget.todos[i].text, style: TextStyle(color: Colors.white)),
           ],
         ),
       );
@@ -46,7 +48,7 @@ class _TodoListState extends State<TodoList> {
 
   void _saveTodo(String text) {
     setState(() {
-      widget.todos.add({"id": widget.todos.length + 1, "value": false, "text": text});
+        widget.todos.add(TodoItemModel(id:widget.todos.length + 1 , text: text,value: false));
     });
     _toggleTodoOpenModal();
   }

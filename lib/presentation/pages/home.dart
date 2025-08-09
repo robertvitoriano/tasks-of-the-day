@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/presentation/pages/todo_list.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
-
-/// Model for a single todo item
-class TodoItem {
+class TodoItemModel {
   int id;
   String text;
   bool value;
-  TodoItem({required this.id, required this.text, this.value = false});
+  TodoItemModel({required this.id, required this.text, this.value = false});
 }
 
-/// Model for a todo list
 class TodoListModel {
   int id;
   String title;
-  List<TodoItem> items;
-  TodoListModel({required this.id, required this.title, List<TodoItem>? items})
+  List<TodoItemModel> items;
+  TodoListModel({required this.id, required this.title, List<TodoItemModel>? items})
     : items = items ?? [];
 }
 
@@ -28,24 +25,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  /// List of todo lists
   final List<TodoListModel> todoLists = [];
 
   bool isTodoCreationModalOpen = false;
   int? _selectedTodoIndex;
 
-  /// Select a todo list by index
   void selectTodo(int index) {
     setState(() => _selectedTodoIndex = index);
   }
 
-  /// Returns a list of widgets for each todo list
   List<Widget> getTodoLists() {
     final List<Widget> lists = [];
     for (var i = 0; i < todoLists.length; i++) {
       lists.add(
         GestureDetector(
-          onTap: () => setState(() => _selectedTodoIndex = i),
+          onTap: () => selectTodo(i),
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -79,7 +73,7 @@ class _HomeState extends State<Home> {
     if (_selectedTodoIndex == null) return;
     setState(() {
       final items = todoLists[_selectedTodoIndex!].items;
-      items.add(TodoItem(id: items.length + 1, text: text));
+      items.add(TodoItemModel(id: items.length + 1, text: text));
     });
     _toggleTodoCreationModal();
   }
@@ -93,7 +87,7 @@ class _HomeState extends State<Home> {
   Widget _getRendering() {
     
     bool isSomeTodoListSelected = _selectedTodoIndex != null;
-    
+        
     if (!isSomeTodoListSelected) {
       return Center(
         child: isTodoCreationModalOpen
@@ -111,10 +105,10 @@ class _HomeState extends State<Home> {
     return Center(
       child: isTodoCreationModalOpen
           ? NewTodoModal(
-              title: "Create Todo Item",
+              title: "Create Item",
               onSave: (String text) => _saveTodoItem(text),
             )
-          : TodoList(
+          :  TodoList(
               title: todoLists[_selectedTodoIndex!].title,
               todos: todoLists[_selectedTodoIndex!].items,
             ),
