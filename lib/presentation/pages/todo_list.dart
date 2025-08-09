@@ -22,7 +22,7 @@ class _TodoListState extends State<TodoList> {
 
   List<Widget> getListOfTodos() {
     List<Widget> todos = [];
-    print(widget.todos);
+
     for (var i = 0; i < widget.todos.length; i++) {
       todos.add(
         Row(
