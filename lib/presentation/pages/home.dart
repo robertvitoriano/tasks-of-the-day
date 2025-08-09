@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/domain/entities/todo_item.dart';
 import 'package:flutter_todo/domain/entities/todo_list.dart';
-import 'package:flutter_todo/presentation/pages/todo_list.dart';
+import 'package:flutter_todo/presentation/widgets/todo_list.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
 
 class Home extends StatefulWidget {
