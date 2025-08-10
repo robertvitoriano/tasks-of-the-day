@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/domain/entities/todo_item.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
+import 'package:flutter_todo/presentation/widgets/task_card.dart';
 
 class TodoItemsList extends StatefulWidget {
   const TodoItemsList({super.key, required this.title, required this.todos});
@@ -25,16 +26,7 @@ class _TodoItemsListState extends State<TodoItemsList> {
 
     for (var i = 0; i < widget.todos.length; i++) {
       todos.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Checkbox(
-              value: widget.todos[i].value,
-              onChanged: (bool? newValue) => onChanged(i, newValue!),
-            ),
-            Text(widget.todos[i].text, style: TextStyle(color: Colors.white)),
-          ],
-        ),
+        TodoItemCard(index: i,onChanged:onChanged, todo: widget.todos[i])
       );
     }
     return todos;
