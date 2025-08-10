@@ -22,51 +22,67 @@ class TodoItemCard extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: Row(
             children: [
-              // 🟢 Main content takes all available horizontal space
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Checkbox(
-                          value: todo.value,
-                          onChanged: (bool? newValue) {
-                            if (newValue != null) {
-                              onChanged(index, newValue);
-                            }
-                          },
-                        ),
-                        Expanded(
-                          child: Text(
-                            todo.text,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: todo.value,
+                              onChanged: (bool? newValue) {
+                                if (newValue != null) {
+                                  onChanged(index, newValue);
+                                }
+                              },
                             ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                            Expanded(
+                              child: Text(
+                                todo.text,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Text(
+                              '7:00',
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "New todo created",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
                         ),
                       ],
                     ),
-                    const Text(
-                      "New todo created",
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                    const Text(
-                      "Generic tasks",
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                    Row(
+                      children: [
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        const Text(
+                          "Generic",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ),
-
-              Text(
-                '7:00',
-                style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontSize: 14,
                 ),
               ),
             ],
