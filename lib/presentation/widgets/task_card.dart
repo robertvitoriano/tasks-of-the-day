@@ -45,10 +45,10 @@ class _TodoCategory extends StatelessWidget {
         ),
         SizedBox(width: 10),
         Container(
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
             color: Colors.grey,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: const Text(
             "Generic",
