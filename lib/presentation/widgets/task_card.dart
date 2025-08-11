@@ -2,27 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/domain/entities/todo_item.dart';
 
 class _TodoHeader extends StatelessWidget {
-  const _TodoHeader({
-    required this.onChanged,
-    required this.todo,
-    required this.index,
-  });
+  const _TodoHeader({required this.todo, required this.index});
 
-  final void Function(int todoIndex, bool newValue) onChanged;
   final TodoItem todo;
   final int index;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Checkbox(
-          value: todo.value,
-          onChanged: (bool? newValue) {
-            if (newValue != null) {
-              onChanged(index, newValue);
-            }
-          },
-        ),
         Expanded(
           child: Text(
             todo.text,
@@ -79,12 +66,21 @@ class _TodoContent extends StatelessWidget {
   @override
   Widget build(Object context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Checkbox(
+          value: todo.value,
+          onChanged: (bool? newValue) {
+            if (newValue != null) {
+              onChanged(index, newValue);
+            }
+          },
+        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _TodoHeader(onChanged: onChanged, todo: todo, index: index),
+              _TodoHeader(todo: todo, index: index),
               const Text(
                 "New todo created",
                 style: TextStyle(color: Colors.grey, fontSize: 12),
@@ -112,10 +108,11 @@ class TodoItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Card(child: Padding(
-      padding: const EdgeInsets.all(15),
-      child: _TodoContent(onChanged: onChanged, todo: todo, index: index),
-    ),);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: _TodoContent(onChanged: onChanged, todo: todo, index: index),
+      ),
+    );
   }
 }
