@@ -44,9 +44,16 @@ class _TodoCategory extends StatelessWidget {
           ),
         ),
         SizedBox(width: 10),
-        const Text(
-          "Generic",
-          style: TextStyle(color: Colors.grey, fontSize: 12),
+        Container(
+          padding: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Text(
+            "Generic",
+            style: TextStyle(color: Colors.white, fontSize: 12),
+          ),
         ),
       ],
     );
