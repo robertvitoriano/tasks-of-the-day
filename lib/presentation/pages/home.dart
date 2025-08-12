@@ -119,6 +119,7 @@ class _HomeState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleTodoCreationModal,
+        backgroundColor: Colors.amber[800],
         child: const Icon(Icons.add),
       ),
     );
