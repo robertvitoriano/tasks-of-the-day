@@ -1,38 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'todo_item_model.dart';
+part of 'day_list_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TodoItemModelAdapter extends TypeAdapter<TodoItemModel> {
+class DayListModelAdapter extends TypeAdapter<DayListModel> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  TodoItemModel read(BinaryReader reader) {
+  DayListModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return TodoItemModel(
+    return DayListModel(
       id: fields[1] as int,
-      text: fields[2] as String,
-      value: fields[3] as bool,
+      title: fields[2] as String,
+      tasks: (fields[3] as List?)?.cast<TaskModel>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, TodoItemModel obj) {
+  void write(BinaryWriter writer, DayListModel obj) {
     writer
       ..writeByte(3)
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)
-      ..write(obj.text)
+      ..write(obj.title)
       ..writeByte(3)
-      ..write(obj.value);
+      ..write(obj.tasks);
   }
 
   @override
@@ -41,7 +41,7 @@ class TodoItemModelAdapter extends TypeAdapter<TodoItemModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TodoItemModelAdapter &&
+      other is DayListModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

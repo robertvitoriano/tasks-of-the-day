@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/data/models/todo_item_model.dart';
-import 'package:flutter_todo/data/models/todo_list_model.dart';
+import 'package:flutter_todo/data/models/task_model.dart';
+import 'package:flutter_todo/data/models/day_list_model.dart';
 import 'package:flutter_todo/presentation/pages/layout.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,8 +9,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
-  Hive.registerAdapter(TodoItemModelAdapter());
-  Hive.registerAdapter(TodoListModelAdapter());
+  Hive.registerAdapter(TaskModelAdapter());
+  Hive.registerAdapter(DayListModelAdapter());
   runApp(const MyApp());
 }
 

@@ -1,8 +1,8 @@
-class TodoItem {
+class Task {
   int id;
   String text;
-  bool value;
-  TodoItem({required this.id, required this.text, this.value = false});
+  bool done;
+  Task({required this.id, required this.text, this.done = false});
 }
 
 // {

@@ -1,38 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'todo_list_model.dart';
+part of 'task_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TodoListModelAdapter extends TypeAdapter<TodoListModel> {
+class TaskModelAdapter extends TypeAdapter<TaskModel> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
-  TodoListModel read(BinaryReader reader) {
+  TaskModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return TodoListModel(
+    return TaskModel(
       id: fields[1] as int,
-      title: fields[2] as String,
-      items: (fields[3] as List?)?.cast<TodoItemModel>(),
+      text: fields[2] as String,
+      done: fields[3] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, TodoListModel obj) {
+  void write(BinaryWriter writer, TaskModel obj) {
     writer
       ..writeByte(3)
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)
-      ..write(obj.title)
+      ..write(obj.text)
       ..writeByte(3)
-      ..write(obj.items);
+      ..write(obj.done);
   }
 
   @override
@@ -41,7 +41,7 @@ class TodoListModelAdapter extends TypeAdapter<TodoListModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TodoListModelAdapter &&
+      other is TaskModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

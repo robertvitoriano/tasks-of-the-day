@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/domain/entities/todo_item.dart';
+import 'package:flutter_todo/domain/entities/task.dart';
 
 class _TodoHeader extends StatelessWidget {
   const _TodoHeader({required this.todo, required this.index});
 
-  final TodoItem todo;
+  final Task todo;
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _TodoContent extends StatelessWidget {
   });
 
   final void Function(int todoIndex, bool newValue) onChanged;
-  final TodoItem todo;
+  final Task todo;
   final int index;
   @override
   Widget build(Object context) {
@@ -76,7 +76,7 @@ class _TodoContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Checkbox(
-          value: todo.value,
+          value: todo.done,
           onChanged: (bool? newValue) {
             if (newValue != null) {
               onChanged(index, newValue);
@@ -102,8 +102,8 @@ class _TodoContent extends StatelessWidget {
   }
 }
 
-class TodoItemCard extends StatelessWidget {
-  const TodoItemCard({
+class TaskCard extends StatelessWidget {
+  const TaskCard({
     super.key,
     required this.onChanged,
     required this.todo,
@@ -111,7 +111,7 @@ class TodoItemCard extends StatelessWidget {
   });
 
   final void Function(int todoIndex, bool newValue) onChanged;
-  final TodoItem todo;
+  final Task todo;
   final int index;
 
   @override

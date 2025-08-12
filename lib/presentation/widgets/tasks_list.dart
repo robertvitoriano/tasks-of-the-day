@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/domain/entities/todo_item.dart';
+import 'package:flutter_todo/domain/entities/task.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
 import 'package:flutter_todo/presentation/widgets/task_card.dart';
 
-class TodoItemsList extends StatefulWidget {
-  const TodoItemsList({super.key, required this.title, required this.todos});
+class TasksList extends StatefulWidget {
+  const TasksList({super.key, required this.title, required this.tasks});
   final String title;
-  final List<TodoItem> todos;
+  final List<Task> tasks;
 
   @override
-  State<TodoItemsList> createState() => _TodoItemsListState();
+  State<TasksList> createState() => _TasksListState();
 }
 
-class _TodoItemsListState extends State<TodoItemsList> {
+class _TasksListState extends State<TasksList> {
   bool isTodoCreationModalOpen = false;
 
   void onChanged(int index, bool value) {
     setState(() {
-      widget.todos[index].value = value;
+      widget.tasks[index].done = value;
     });
   }
 
-  List<Widget> getListOfTodos() {
-    List<Widget> todos = [];
+  List<Widget> getListOftasks() {
+    List<Widget> tasks = [];
 
-    for (var i = 0; i < widget.todos.length; i++) {
-      todos.add(
-        TodoItemCard(index: i, onChanged: onChanged, todo: widget.todos[i]),
+    for (var i = 0; i < widget.tasks.length; i++) {
+      tasks.add(
+        TaskCard(index: i, onChanged: onChanged, todo: widget.tasks[i]),
       );
     }
-    return todos;
+    return tasks;
   }
 
   void _toggleTodoOpenModal() {
@@ -40,8 +40,8 @@ class _TodoItemsListState extends State<TodoItemsList> {
 
   void _saveTodo(String text) {
     setState(() {
-      widget.todos.add(
-        TodoItem(id: widget.todos.length + 1, text: text, value: false),
+      widget.tasks.add(
+        Task(id: widget.tasks.length + 1, text: text, done: false),
       );
     });
     _toggleTodoOpenModal();
@@ -56,7 +56,7 @@ class _TodoItemsListState extends State<TodoItemsList> {
           )
         : Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: getListOfTodos(),
+            children: getListOftasks(),
           );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/domain/entities/todo_item.dart';
-import 'package:flutter_todo/domain/entities/todo_list.dart';
-import 'package:flutter_todo/presentation/widgets/todo_list.dart';
+import 'package:flutter_todo/domain/entities/task.dart';
+import 'package:flutter_todo/domain/entities/day_list.dart';
+import 'package:flutter_todo/presentation/widgets/tasks_list.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,14 +16,14 @@ class _HomeState extends State<HomePage> {
   int? _selectedTodoIndex;
 
   bool isTodoCreationModalOpen = false;
-  final List<TodoList> todoLists = [];
+  final List<DayList> dayLists = [];
   void selectTodo(int index) {
     setState(() => _selectedTodoIndex = index);
   }
 
-  List<Widget> getTodoLists() {
+  List<Widget> getDayLists() {
     final List<Widget> lists = [];
-    for (var i = 0; i < todoLists.length; i++) {
+    for (var i = 0; i < dayLists.length; i++) {
       lists.add(
         GestureDetector(
           onTap: () => selectTodo(i),
@@ -31,7 +31,7 @@ class _HomeState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Text(
-                todoLists[i].title,
+                dayLists[i].title,
                 style: const TextStyle(color: Colors.black),
               ),
             ),
@@ -42,25 +42,25 @@ class _HomeState extends State<HomePage> {
     return lists;
   }
 
-  void onChanged(int index, bool? value) {
+  void onChanged(int index, bool? done) {
     if (_selectedTodoIndex == null) return;
     setState(() {
-      todoLists[_selectedTodoIndex!].items[index].value = value ?? false;
+      dayLists[_selectedTodoIndex!].tasks[index].done = done ?? false;
     });
   }
 
-  void _saveTodoList(String text) {
+  void _saveDayList(String text) {
     setState(() {
-      todoLists.add(TodoList(id: todoLists.length + 1, title: text));
+      dayLists.add(DayList(id: dayLists.length + 1, title: text));
     });
     _toggleTodoCreationModal();
   }
 
-  void _saveTodoItem(String text) {
+  void _saveTask(String text) {
     if (_selectedTodoIndex == null) return;
     setState(() {
-      final items = todoLists[_selectedTodoIndex!].items;
-      items.add(TodoItem(id: items.length + 1, text: text));
+      final tasks = dayLists[_selectedTodoIndex!].tasks;
+      tasks.add(Task(id: tasks.length + 1, text: text));
     });
     _toggleTodoCreationModal();
   }
@@ -72,43 +72,43 @@ class _HomeState extends State<HomePage> {
   }
 
   Widget _buildBodyContent() {
-    bool isSomeTodoListSelected = _selectedTodoIndex != null;
+    bool isSomeDayListSelected = _selectedTodoIndex != null;
 
-    if (!isSomeTodoListSelected) {
+    if (!isSomeDayListSelected) {
       return isTodoCreationModalOpen
           ? NewTodoModal(
               title: "Create Todo List",
-              onSave: (String text) => _saveTodoList(text),
+              onSave: (String text) => _saveDayList(text),
             )
           : Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [SizedBox(height: 20), ...getTodoLists()],
+              children: [SizedBox(height: 20), ...getDayLists()],
             );
     }
 
     return isTodoCreationModalOpen
         ? NewTodoModal(
             title: "Create Item",
-            onSave: (String text) => _saveTodoItem(text),
+            onSave: (String text) => _saveTask(text),
           )
-        : TodoItemsList(
-            title: todoLists[_selectedTodoIndex!].title,
-            todos: todoLists[_selectedTodoIndex!].items,
+        : TasksList(
+            title: dayLists[_selectedTodoIndex!].title,
+            tasks: dayLists[_selectedTodoIndex!].tasks,
           );
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isSomeTodoListSelected = _selectedTodoIndex != null;
+    bool isSomeDayListSelected = _selectedTodoIndex != null;
     return Scaffold(
       body: _buildBodyContent(),
       appBar: AppBar(
         title: Text(
-          isSomeTodoListSelected
-              ? todoLists[_selectedTodoIndex!].title
+          isSomeDayListSelected
+              ? dayLists[_selectedTodoIndex!].title
               : widget.title,
         ),
-        leading: isSomeTodoListSelected
+        leading: isSomeDayListSelected
             ? IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {

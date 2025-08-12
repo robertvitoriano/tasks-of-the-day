@@ -1,22 +1,22 @@
-import 'package:flutter_todo/data/models/todo_list_model.dart';
+import 'package:flutter_todo/data/models/day_list_model.dart';
 import 'package:hive/hive.dart';
 
-class TodoListsLocalDatasource {
-  final Box<TodoListModel> box;
+class DayListsLocalDatasource {
+  final Box<DayListModel> box;
 
-  TodoListsLocalDatasource(this.box);
+  DayListsLocalDatasource(this.box);
   Future<void> saveTodo({
     required String key,
-    required TodoListModel todoList,
+    required DayListModel dayList,
   }) async {
-    await box.put(key, todoList);
+    await box.put(key, dayList);
   }
 
-  TodoListModel? getTodoList({required String key}) {
-    final todoList = box.get(key);
+  DayListModel? getDayList({required String key}) {
+    final dayList = box.get(key);
 
-    if (todoList == null) return null;
+    if (dayList == null) return null;
 
-    return todoList;
+    return dayList;
   }
 }
