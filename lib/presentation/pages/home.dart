@@ -56,11 +56,11 @@ class _HomeState extends State<HomePage> {
     _toggleTodoCreationModal();
   }
 
-  void _saveTask(String text) {
+  void _saveTask(String title) {
     if (_selectedTodoIndex == null) return;
     setState(() {
       final tasks = dayLists[_selectedTodoIndex!].tasks;
-      tasks.add(Task(id: tasks.length + 1, text: text));
+      tasks.add(Task(id: tasks.length + 1, title: title));
     });
     _toggleTodoCreationModal();
   }

@@ -6,8 +6,25 @@ class TaskModel extends HiveObject {
   @HiveField(1)
   int id;
   @HiveField(2)
-  String text;
+  String title;
   @HiveField(3)
   bool done;
-  TaskModel({required this.id, required this.text, required this.done});
+  @HiveField(4)
+  String description;
+  @HiveField(5)
+  String priority;
+  @HiveField(6)
+  String category;
+  @HiveField(7)
+  DateTime dueTime;
+
+  TaskModel({
+    required this.id,
+    required this.title,
+    required this.done,
+    required this.description,
+    required this.priority,
+    required this.category,
+    required this.dueTime,
+  });
 }

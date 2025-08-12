@@ -15,6 +15,6 @@ extension DayListModelMapper on DayListModel {
 
 extension TaskModelMapper on TaskModel {
   Task toEntity() {
-    return Task(id: id, done: done, text: text);
+    return Task(id: id, done: done, title: title,category: category, description: description, dueTime: dueTime,priority: priority);
   }
 }

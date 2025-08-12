@@ -12,7 +12,7 @@ class _TodoHeader extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            todo.text,
+            todo.title,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 16,

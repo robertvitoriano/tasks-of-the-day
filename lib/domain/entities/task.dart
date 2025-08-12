@@ -1,16 +1,18 @@
 class Task {
   int id;
-  String text;
+  String title;
+  String description;
+  String priority;
+  String category;
+  DateTime dueTime;
   bool done;
-  Task({required this.id, required this.text, this.done = false});
+  Task({
+    required this.id,
+    required this.title,
+    this.done = false,
+    this.description = "",
+    this.priority = "",
+    this.category = "",
+    DateTime? dueTime,
+  }) : dueTime = dueTime ?? DateTime.now().add(const Duration(hours: 5));
 }
-
-// {
-//   id: "4",
-//   title: "Call mom",
-//   description: "Weekly check-in call",
-//   completed: false,
-//   priority: "low",
-//   category: "Personal",
-//   dueTime: "19:00",
-// }

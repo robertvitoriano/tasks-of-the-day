@@ -38,10 +38,10 @@ class _TasksListState extends State<TasksList> {
     });
   }
 
-  void _saveTodo(String text) {
+  void _saveTodo(String title) {
     setState(() {
       widget.tasks.add(
-        Task(id: widget.tasks.length + 1, text: text, done: false),
+        Task(id: widget.tasks.length + 1, title: title, done: false),
       );
     });
     _toggleTodoOpenModal();
