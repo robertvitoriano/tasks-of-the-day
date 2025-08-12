@@ -92,6 +92,7 @@ class _TodoContent extends StatelessWidget {
                 "New todo created",
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
+              SizedBox(height:10),
               _TodoCategory(),
             ],
           ),
@@ -116,6 +117,7 @@ class TodoItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: _TodoContent(onChanged: onChanged, todo: todo, index: index),

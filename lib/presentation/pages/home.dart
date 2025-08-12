@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/extensions/colors.dart';
 import 'package:flutter_todo/domain/entities/todo_item.dart';
 import 'package:flutter_todo/domain/entities/todo_list.dart';
 import 'package:flutter_todo/presentation/widgets/todo_list.dart';
@@ -14,7 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final List<TodoList> todoLists = [];
-  
+
   bool isTodoCreationModalOpen = false;
   int? _selectedTodoIndex;
 
@@ -73,39 +74,47 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildBodyContent() {
-    
     bool isSomeTodoListSelected = _selectedTodoIndex != null;
-        
+
     if (!isSomeTodoListSelected) {
-      return Center(
-        child: isTodoCreationModalOpen
-            ? NewTodoModal(
-                title: "Create Todo List",
-                onSave: (String text) => _saveTodoList(text),
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [SizedBox(height: 20), ...getTodoLists()],
-              ),
-      );
-    }
-    
-    return Center(
-      child: isTodoCreationModalOpen
+      return isTodoCreationModalOpen
           ? NewTodoModal(
-              title: "Create Item",
-              onSave: (String text) => _saveTodoItem(text),
+              title: "Create Todo List",
+              onSave: (String text) => _saveTodoList(text),
             )
-          :  TodoItemsList(
-              title: todoLists[_selectedTodoIndex!].title,
-              todos: todoLists[_selectedTodoIndex!].items,
-            ),
-    );
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [SizedBox(height: 20), ...getTodoLists()],
+            );
+    }
+
+    return isTodoCreationModalOpen
+        ? NewTodoModal(
+            title: "Create Item",
+            onSave: (String text) => _saveTodoItem(text),
+          )
+        : TodoItemsList(
+            title: todoLists[_selectedTodoIndex!].title,
+            todos: todoLists[_selectedTodoIndex!].items,
+          );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: _buildBodyContent(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.done_outline_outlined),
+            label: 'Completed',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+
+        selectedItemColor: Colors.amber[800],
+      ),
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: _selectedTodoIndex != null
@@ -121,8 +130,7 @@ class _HomeState extends State<Home> {
         title: Text(widget.title),
         titleTextStyle: const TextStyle(color: Colors.black),
       ),
-      backgroundColor: Colors.black,
-      body: _buildBodyContent(),
+      backgroundColor: "#E5FCEF".toColor(),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleTodoCreationModal,
         backgroundColor: Colors.white,

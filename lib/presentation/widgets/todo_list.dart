@@ -26,7 +26,7 @@ class _TodoItemsListState extends State<TodoItemsList> {
 
     for (var i = 0; i < widget.todos.length; i++) {
       todos.add(
-        TodoItemCard(index: i,onChanged:onChanged, todo: widget.todos[i])
+        TodoItemCard(index: i, onChanged: onChanged, todo: widget.todos[i]),
       );
     }
     return todos;
@@ -40,24 +40,23 @@ class _TodoItemsListState extends State<TodoItemsList> {
 
   void _saveTodo(String text) {
     setState(() {
-        widget.todos.add(TodoItem(id:widget.todos.length + 1 , text: text,value: false));
+      widget.todos.add(
+        TodoItem(id: widget.todos.length + 1, text: text, value: false),
+      );
     });
     _toggleTodoOpenModal();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: isTodoCreationModalOpen
-          ? NewTodoModal(
-              title: "Create Todo Item",
-              onSave: (text) => _saveTodo(text),
-            )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: getListOfTodos(),
-            ),
-    );
+    return isTodoCreationModalOpen
+        ? NewTodoModal(
+            title: "Create Todo Item",
+            onSave: (text) => _saveTodo(text),
+          )
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: getListOfTodos(),
+          );
   }
 }
-  
