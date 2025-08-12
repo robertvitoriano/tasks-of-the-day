@@ -99,6 +99,28 @@ class _HomeState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildBodyContent();
+    bool isSomeTodoListSelected = _selectedTodoIndex != null;
+    return Scaffold(
+      body: _buildBodyContent(),
+      appBar: AppBar(
+        title: Text(
+          isSomeTodoListSelected
+              ? todoLists[_selectedTodoIndex!].title
+              : widget.title,
+        ),
+        leading: isSomeTodoListSelected
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  setState(() => _selectedTodoIndex = null);
+                },
+              )
+            : null,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _toggleTodoCreationModal,
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
