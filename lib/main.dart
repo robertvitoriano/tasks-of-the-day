@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/data/models/todo_item_model.dart';
 import 'package:flutter_todo/data/models/todo_list_model.dart';
-import 'package:flutter_todo/presentation/routes.dart';
+import 'package:flutter_todo/presentation/pages/layout.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
       ),
-      routes: appRoutes,
+      home: Layout(title: "Tasks of the day"),
     );
   }
 }

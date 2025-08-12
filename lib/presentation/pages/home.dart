@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/extensions/colors.dart';
 import 'package:flutter_todo/domain/entities/todo_item.dart';
 import 'package:flutter_todo/domain/entities/todo_list.dart';
 import 'package:flutter_todo/presentation/widgets/todo_list.dart';
 import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key, required this.title});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, required this.title});
   final String title;
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomePage> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  final List<TodoList> todoLists = [];
-
-  bool isTodoCreationModalOpen = false;
+class _HomeState extends State<HomePage> {
   int? _selectedTodoIndex;
 
+  bool isTodoCreationModalOpen = false;
+  final List<TodoList> todoLists = [];
   void selectTodo(int index) {
     setState(() => _selectedTodoIndex = index);
   }
@@ -101,44 +99,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBodyContent(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.done_outline_outlined),
-            label: 'Completed',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-
-        selectedItemColor: Colors.amber[800],
-      ),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: _selectedTodoIndex != null
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () {
-                  setState(() {
-                    _selectedTodoIndex = null;
-                  });
-                },
-              )
-            : null,
-        title: Text(widget.title),
-        titleTextStyle: const TextStyle(color: Colors.black),
-      ),
-      backgroundColor: "#E5FCEF".toColor(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _toggleTodoCreationModal,
-        backgroundColor: Colors.white,
-        tooltip: _selectedTodoIndex == null
-            ? 'Create new todo list'
-            : 'Create new todo item',
-        child: const Icon(Icons.add),
-      ),
-    );
+    return _buildBodyContent();
   }
 }
