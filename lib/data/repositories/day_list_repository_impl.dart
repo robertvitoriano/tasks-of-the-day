@@ -21,9 +21,6 @@ class DayListRepositoryImpl implements DayListRepository {
     required String id,
     required DayList dayList,
   }) async {
-    await dayListsLocalDataSource.saveTodo(
-      key: id,
-      dayList: dayList.toModel(),
-    );
+    await dayListsLocalDataSource.saveTodo(key: id, dayList: dayList.toModel());
   }
 }

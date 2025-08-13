@@ -50,10 +50,7 @@ class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
     return isTodoCreationModalOpen
-        ? NewTask(
-            title: "Create Todo Item",
-            onSave: (text) => _saveTodo(text),
-          )
+        ? NewTask(title: "Create Todo Item", onSave: (text) => _saveTodo(text))
         : Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: getListOftasks(),

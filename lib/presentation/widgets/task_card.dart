@@ -92,7 +92,7 @@ class _TodoContent extends StatelessWidget {
                 "New todo created",
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
-              SizedBox(height:10),
+              SizedBox(height: 10),
               _TodoCategory(),
             ],
           ),

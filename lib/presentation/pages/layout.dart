@@ -18,11 +18,7 @@ class _LayoutState extends State<Layout> {
   @override
   void initState() {
     super.initState();
-    _pages = [
-      HomePage(),
-      const CompletedPage(),
-      const ProfilePage(),
-    ];
+    _pages = [HomePage(), const CompletedPage(), const ProfilePage()];
   }
 
   @override
