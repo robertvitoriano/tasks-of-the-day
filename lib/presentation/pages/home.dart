@@ -102,7 +102,7 @@ class _HomeState extends State<HomePage> {
     bool isSomeDayListSelected = _selectedTodoIndex != null;
     return Scaffold(
       body: _buildBodyContent(),
-      backgroundColor:Colors.transparent,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(
           isSomeDayListSelected
@@ -119,7 +119,7 @@ class _HomeState extends State<HomePage> {
             : null,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _toggleTodoCreationModal,
+        onPressed: () => Navigator.pushNamed(context, 'new-task'),
         backgroundColor: Colors.amber[800],
         child: const Icon(Icons.add),
       ),

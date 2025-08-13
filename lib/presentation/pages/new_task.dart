@@ -28,98 +28,101 @@ class _NewTaskState extends State<NewTask> {
     'Health',
     'Others',
   ];
-  String? selectedCategory; // keep track of selected value
+  String? selectedCategory; 
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Task details",
-              style: TextStyle(fontSize: 36, color: Colors.black),
-            ),
-            CustomTextField(
-              controller: _newTaskController,
-              hintText: "Digite seu novo todo",
-              type: CustomTextFieldType.text,
-              label: "Task title",
-            ),
-            CustomTextField(
-              controller: _newTaskController,
-              hintText: "Digite seu novo todo",
-              type: CustomTextFieldType.text,
-              label: "Description",
-              maxLines: 5,
-            ),
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Task details",
+                style: TextStyle(fontSize: 36, color: Colors.black),
+              ),
+              CustomTextField(
+                controller: _newTaskController,
+                hintText: "Digite seu novo todo",
+                type: CustomTextFieldType.text,
+                label: "Task title",
+              ),
+              CustomTextField(
+                controller: _newTaskController,
+                hintText: "Digite seu novo todo",
+                type: CustomTextFieldType.text,
+                label: "Description",
+                maxLines: 5,
+              ),
 
-            Row(
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      labelText: 'Category',
-                      border: OutlineInputBorder(),
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        labelText: 'Category',
+                        border: OutlineInputBorder(),
+                      ),
+                      value: selectedCategory,
+                      items: categories.map((category) {
+                        return DropdownMenuItem<String>(
+                          value: category,
+                          child: Text(category),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedCategory = value;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a category';
+                        }
+                        return null;
+                      },
                     ),
-                    value: selectedCategory,
-                    items: categories.map((category) {
-                      return DropdownMenuItem<String>(
-                        value: category,
-                        child: Text(category),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedCategory = value;
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select a category';
-                      }
-                      return null;
-                    },
                   ),
-                ),
-                SizedBox(width: 80),
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      labelText: 'Category',
-                      border: OutlineInputBorder(),
+                  SizedBox(width: 80),
+                  Expanded(
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        labelText: 'Category',
+                        border: OutlineInputBorder(),
+                      ),
+                      value: selectedCategory,
+                      items: categories.map((category) {
+                        return DropdownMenuItem<String>(
+                          value: category,
+                          child: Text(category),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedCategory = value;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a category';
+                        }
+                        return null;
+                      },
                     ),
-                    value: selectedCategory,
-                    items: categories.map((category) {
-                      return DropdownMenuItem<String>(
-                        value: category,
-                        child: Text(category),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedCategory = value;
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select a category';
-                      }
-                      return null;
-                    },
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20,),
-            _Buttons(saveTodo: _saveTodo),
-          ],
+                ],
+              ),
+              SizedBox(height: 20),
+              _Buttons(saveTodo: _saveTodo),
+            ],
+          ),
         ),
       ),
     );
