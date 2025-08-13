@@ -5,8 +5,7 @@ import 'package:flutter_todo/presentation/widgets/tasks_list.dart';
 import 'package:flutter_todo/presentation/pages/new_task.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomeState();
@@ -99,25 +98,9 @@ class _HomeState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isSomeDayListSelected = _selectedTodoIndex != null;
     return Scaffold(
       body: _buildBodyContent(),
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        title: Text(
-          isSomeDayListSelected
-              ? dayLists[_selectedTodoIndex!].title
-              : widget.title,
-        ),
-        leading: isSomeDayListSelected
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  setState(() => _selectedTodoIndex = null);
-                },
-              )
-            : null,
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, 'new-task'),
         backgroundColor: Colors.amber[800],

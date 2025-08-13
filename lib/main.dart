@@ -5,6 +5,8 @@ import 'package:flutter_todo/presentation/pages/layout.dart';
 import 'package:flutter_todo/presentation/pages/new_task.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_todo/extensions/colors.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,12 +26,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Tasks of the day',
-      color: Colors.white,
+      color: "#E5FCEF".toColor(),
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        colorScheme: ColorScheme.fromSeed(seedColor: "#E5FCEF".toColor()),
       ),
-      home: Layout(title: "Tasks of the day"),
+      home: Layout(),
       routes: {"new-task": (context) => NewTask(onSave: _save, title: "Add New Task")},
     );
   }

@@ -5,8 +5,7 @@ import 'package:flutter_todo/presentation/pages/home.dart';
 import 'package:flutter_todo/presentation/pages/profile.dart';
 
 class Layout extends StatefulWidget {
-  const Layout({super.key, required this.title});
-  final String title;
+  const Layout({super.key});
 
   @override
   State<Layout> createState() => _LayoutState();
@@ -20,7 +19,7 @@ class _LayoutState extends State<Layout> {
   void initState() {
     super.initState();
     _pages = [
-      HomePage(title: widget.title),
+      HomePage(),
       const CompletedPage(),
       const ProfilePage(),
     ];
