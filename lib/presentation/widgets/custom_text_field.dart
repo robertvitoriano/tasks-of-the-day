@@ -8,11 +8,13 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.type,
     required this.controller,
+    this.maxLines = 1,
     this.label = '',
   });
 
   final String hintText;
   final String label;
+  final int maxLines;
   final CustomTextFieldType type;
   final TextEditingController controller;
 
@@ -59,6 +61,7 @@ class CustomTextField extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
+            maxLines: maxLines,
             controller: controller,
             obscureText: isPassword,
             keyboardType: keyboardType,

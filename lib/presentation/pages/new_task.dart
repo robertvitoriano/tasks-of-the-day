@@ -21,6 +21,15 @@ class _NewTaskState extends State<NewTask> {
     }
   }
 
+  final List<String> categories = [
+    'Work',
+    'Personal',
+    'Shopping',
+    'Health',
+    'Others',
+  ];
+  String? selectedCategory; // keep track of selected value
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +57,67 @@ class _NewTaskState extends State<NewTask> {
               hintText: "Digite seu novo todo",
               type: CustomTextFieldType.text,
               label: "Description",
+              maxLines: 5,
             ),
+
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      labelText: 'Category',
+                      border: OutlineInputBorder(),
+                    ),
+                    value: selectedCategory,
+                    items: categories.map((category) {
+                      return DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCategory = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select a category';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(width: 80),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      labelText: 'Category',
+                      border: OutlineInputBorder(),
+                    ),
+                    value: selectedCategory,
+                    items: categories.map((category) {
+                      return DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCategory = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select a category';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20,),
             _Buttons(saveTodo: _saveTodo),
           ],
         ),
