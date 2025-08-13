@@ -22,7 +22,7 @@ class _NewTaskState extends State<NewTask> {
   }
 
   final List<String> categories = [
-    'Work',
+    'Medium Priority',
     'Personal',
     'Shopping',
     'Health',
@@ -110,7 +110,20 @@ class _NewTaskState extends State<NewTask> {
                       items: categories.map((category) {
                         return DropdownMenuItem<String>(
                           value: category,
-                          child: Text(category),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Text(category),
+                            ],
+                          ),
                         );
                       }).toList(),
                       onChanged: (value) {

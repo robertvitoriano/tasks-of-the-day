@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
       ),
       home: Layout(title: "Tasks of the day"),
-      routes: {"new-task": (context) => NewTask(onSave: _save, title: "")},
+      routes: {"new-task": (context) => NewTask(onSave: _save, title: "Add New Task")},
     );
   }
 }
