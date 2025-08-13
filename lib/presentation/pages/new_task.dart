@@ -28,11 +28,20 @@ class _NewTaskState extends State<NewTask> {
     'Health',
     'Others',
   ];
-  String? selectedCategory; 
+  String? selectedCategory;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, '/');
+          },
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
