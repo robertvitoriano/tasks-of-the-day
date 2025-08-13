@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/domain/entities/task.dart';
 import 'package:flutter_todo/domain/entities/day_list.dart';
 import 'package:flutter_todo/presentation/widgets/tasks_list.dart';
-import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
+import 'package:flutter_todo/presentation/pages/new_task.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -76,7 +76,7 @@ class _HomeState extends State<HomePage> {
 
     if (!isSomeDayListSelected) {
       return isTodoCreationModalOpen
-          ? NewTodoModal(
+          ? NewTask(
               title: "Create Todo List",
               onSave: (String text) => _saveDayList(text),
             )
@@ -87,7 +87,7 @@ class _HomeState extends State<HomePage> {
     }
 
     return isTodoCreationModalOpen
-        ? NewTodoModal(
+        ? NewTask(
             title: "Create Item",
             onSave: (String text) => _saveTask(text),
           )
@@ -102,6 +102,7 @@ class _HomeState extends State<HomePage> {
     bool isSomeDayListSelected = _selectedTodoIndex != null;
     return Scaffold(
       body: _buildBodyContent(),
+      backgroundColor:Colors.transparent,
       appBar: AppBar(
         title: Text(
           isSomeDayListSelected

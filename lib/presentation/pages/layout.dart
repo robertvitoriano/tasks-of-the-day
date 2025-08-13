@@ -29,9 +29,9 @@ class _LayoutState extends State<Layout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: IndexedStack(index: _currentIndex, children: _pages),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/domain/entities/task.dart';
-import 'package:flutter_todo/presentation/widgets/new_todo_modal.dart';
+import 'package:flutter_todo/presentation/pages/new_task.dart';
 import 'package:flutter_todo/presentation/widgets/task_card.dart';
 
 class TasksList extends StatefulWidget {
@@ -50,7 +50,7 @@ class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
     return isTodoCreationModalOpen
-        ? NewTodoModal(
+        ? NewTask(
             title: "Create Todo Item",
             onSave: (text) => _saveTodo(text),
           )
