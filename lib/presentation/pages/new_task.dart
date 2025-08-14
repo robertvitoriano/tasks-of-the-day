@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/presentation/widgets/custom_dropdown.dart';
+import 'package:flutter_todo/presentation/widgets/priority_item.dart';
 import 'package:flutter_todo/presentation/widgets/custom_text_field.dart';
+
+class Priority {
+  Priority({required this.label, required this.color});
+  final String label;
+  final Color color;
+}
 
 class NewTask extends StatefulWidget {
   const NewTask({super.key, required this.title, required this.onSave});
@@ -21,6 +29,13 @@ class _NewTaskState extends State<NewTask> {
     }
   }
 
+  final List<Priority> priorities = [
+    Priority(label: 'Medium Priority', color: Colors.red),
+    Priority(label: 'Personal', color: Colors.red),
+    Priority(label: 'Shopping', color: Colors.red),
+    Priority(label: 'Health', color: Colors.red),
+    Priority(label: 'Others', color: Colors.red),
+  ];
   final List<String> categories = [
     'Medium Priority',
     'Personal',
@@ -100,44 +115,22 @@ class _NewTaskState extends State<NewTask> {
                     ),
                   ),
                   SizedBox(width: 80),
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        labelText: 'Category',
-                        border: OutlineInputBorder(),
-                      ),
-                      value: selectedCategory,
-                      items: categories.map((category) {
-                        return DropdownMenuItem<String>(
-                          value: category,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 10,
-                                height: 10,
-                                decoration: const BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Text(category),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          selectedCategory = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select a category';
-                        }
-                        return null;
-                      },
-                    ),
+                  CustomDropdown(
+                    selectedValue: selectedCategory,
+                    items: priorities.map((priority) {
+                      return DropdownMenuItem<String>(
+                        value: priority.label,
+                        child: PriorityItem(
+                          priority: priority.label,
+                          color: priority.color,
+                        ),
+                      );
+                    }).toList(),
+                    onSelect: (value) {
+                      setState(() {
+                        selectedCategory = value;
+                      });
+                    },
                   ),
                 ],
               ),
