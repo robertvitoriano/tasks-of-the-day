@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/domain/entities/priority.dart';
 import 'package:flutter_todo/presentation/widgets/custom_dropdown.dart';
 import 'package:flutter_todo/presentation/widgets/priority_item.dart';
 import 'package:flutter_todo/presentation/widgets/custom_text_field.dart';
 
-class Priority {
-  Priority({required this.label, required this.color});
-  final String label;
-  final Color color;
-}
+
 
 class NewTask extends StatefulWidget {
   const NewTask({super.key, required this.title, required this.onSave});
