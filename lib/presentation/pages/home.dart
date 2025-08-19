@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/domain/entities/task.dart';
 import 'package:flutter_todo/domain/entities/day_list.dart';
 import 'package:flutter_todo/presentation/widgets/tasks_list.dart';
 import 'package:flutter_todo/presentation/pages/new_task.dart';
+import 'package:flutter_todo/providers/tasks_provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomeState();
+  ConsumerState<HomePage> createState() => _HomeState();
 }
 
-class _HomeState extends State<HomePage> {
+class _HomeState extends ConsumerState<HomePage> {
   int? _selectedTodoIndex;
 
   bool isTodoCreationModalOpen = false;
@@ -92,12 +94,14 @@ class _HomeState extends State<HomePage> {
           )
         : TasksList(
             title: dayLists[_selectedTodoIndex!].title,
-            tasks: dayLists[_selectedTodoIndex!].tasks,
+            // tasks: dayLists[_selectedTodoIndex!].tasks,
+            tasks: ref.watch(tasksProvider)
           );
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: _buildBodyContent(),
       backgroundColor: Colors.transparent,

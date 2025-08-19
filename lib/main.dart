@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/data/models/task_model.dart';
 import 'package:flutter_todo/data/models/day_list_model.dart';
 import 'package:flutter_todo/presentation/pages/layout.dart';
@@ -16,7 +17,7 @@ void main() async {
     Hive.registerAdapter(TaskModelAdapter());
     Hive.registerAdapter(DayListModelAdapter());
   }
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()) );
 }
 
 void _save(String text) {}
