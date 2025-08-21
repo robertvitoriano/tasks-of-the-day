@@ -40,7 +40,7 @@ class DayListsNotifier extends Notifier<List<DayList>> {
         return list.copyWith(
           tasks: list.tasks.map((task) {
             if (task.id == taskId) {
-              return task.copyWith(isDone: !task.done);
+              return task.copyWith(done: !task.done);
             }
             return task;
           }).toList(),
