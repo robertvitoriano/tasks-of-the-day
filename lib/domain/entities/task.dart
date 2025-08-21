@@ -1,6 +1,6 @@
 class Task {
-  int id;
-  int dayListId;
+  String id;
+  String dayListId;
   String title;
   String description;
   String priority;

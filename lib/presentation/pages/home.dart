@@ -51,17 +51,17 @@ class _HomeState extends ConsumerState<HomePage> {
   }
 
   void _saveDayList(String text) {
-    setState(() {
-      dayLists.add(DayList(id: dayLists.length + 1, title: text));
-    });
+    // setState(() {
+    //   dayLists.add(DayList(id: dayLists.length + 1, title: text));
+    // });
     _toggleTodoCreationModal();
   }
 
   void _saveTask(String title, int dayListId) {
     if (_selectedDayListIndex == null) return;
     setState(() {
-      final tasks = dayLists[_selectedDayListIndex!].tasks;
-      tasks.add(Task(dayListId: dayListId, id: tasks.length + 1, title: title));
+      // final tasks = dayLists[_selectedDayListIndex!].tasks;
+      // tasks.add(Task(dayListId: dayListId, id: tasks.length + 1, title: title));
     });
     _toggleTodoCreationModal();
   }

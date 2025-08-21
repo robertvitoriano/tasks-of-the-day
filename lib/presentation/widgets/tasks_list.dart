@@ -41,9 +41,9 @@ class _TasksListState extends State<TasksList> {
 
   void _saveTodo(String title) {
     setState(() {
-      widget.tasks.add(
-        Task(id: widget.tasks.length + 1, dayListId: widget.taskListId, title: title, done: false),
-      );
+      // widget.tasks.add(
+      //   Task(id: widget.tasks.length + 1, dayListId: widget.taskListId, title: title, done: false),
+      // );
     });
     _toggleTodoOpenModal();
   }

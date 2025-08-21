@@ -5,7 +5,7 @@ part 'day_list_model.g.dart';
 @HiveType(typeId: 1)
 class DayListModel extends HiveObject {
   @HiveField(1)
-  int id;
+  String id;
   @HiveField(2)
   String title;
   @HiveField(3)

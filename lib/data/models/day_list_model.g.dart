@@ -17,7 +17,7 @@ class DayListModelAdapter extends TypeAdapter<DayListModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return DayListModel(
-      id: fields[1] as int,
+      id: fields[1] as String,
       title: fields[2] as String,
       tasks: (fields[3] as List?)?.cast<TaskModel>(),
     );

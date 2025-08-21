@@ -1,82 +1,61 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo/domain/entities/day_list.dart';
 import 'package:flutter_todo/domain/entities/task.dart';
+import 'package:uuid/uuid.dart';
 
-List<Task> allTasks = [
-  Task(
-    id: 1,
-    dayListId: 1,
-    title: 'teste task',
-    category: 'home',
-    description: 'new description',
-    done: false,
-    dueTime: DateTime(2025),
-  ),
-  Task(
-    id: 2,
-    dayListId: 1,
-    title: 'teste task',
-    category: 'home',
-    description: 'new description',
-    done: false,
-    dueTime: DateTime(2025),
-  ),
-  Task(
-    id: 3,
-    dayListId: 1,
-    title: 'teste task',
-    category: 'home',
-    description: 'new description',
-    done: false,
-    dueTime: DateTime(2025),
-  ),
-  Task(
-    id: 4,
-    dayListId: 1,
-    title: 'teste task',
-    category: 'leisure',
-    description: 'new description',
-    done: false,
-    dueTime: DateTime(2025),
-  ),
-  Task(
-    id: 5,
-    dayListId: 1,
-    title: 'teste task',
-    category: 'leisure',
-    description: 'new description',
-    done: false,
-    dueTime: DateTime(2025),
-  ),
-  Task(
-    id: 6,
-    dayListId: 1,
-    title: 'teste task',
-    category: 'leisure',
-    description: 'new description',
-    done: false,
-    dueTime: DateTime(2025),
-  ),
-  Task(
-    id: 7,
-    dayListId: 1,
-    title: 'teste task',
-    category: 'leisure',
-    description: 'new description',
-    done: false,
-    dueTime: DateTime(2025),
-  ),
-  Task(
-    id: 8,
-    dayListId: 1,
-    title: 'teste task',
-    category: 'leisure',
-    description: 'new description',
-    done: false,
-    dueTime: DateTime(2025),
-  ),
-];
-final allDayLists = [];
-final tasksProvider = Provider((ref)=> allTasks);
-final dayListsProvider = Provider((ref)=> allDayLists);
 
-final hometasksProvider = Provider((ref)=>allTasks.where((t)=> t.category == 'home').toList());
+final tasksProvider = StateProvider<List<Task>>((ref) => []);
+
+final dayListsProvider =
+    NotifierProvider<DayListsNotifier, List<DayList>>(DayListsNotifier.new);
+    
+final _uuid = Uuid();
+
+class DayListsNotifier extends Notifier<List<DayList>> {
+  @override
+  List<DayList> build() => [];
+
+  void addDayList(String title) {
+    state = [
+      ...state,
+      DayList(id: _uuid.v4(), title: title, tasks: []),
+    ];
+  }
+
+  void removeDayList(String id) {
+    state = state.where((list) => list.id != id).toList();
+  }
+
+  void addTask(String dayListId, String taskTitle) {
+    state = state.map((list) {
+      if (list.id == dayListId) {
+        return list.copyWith(
+          tasks: [
+            ...list.tasks,
+            Task(id: _uuid.v4(), dayListId: dayListId, title: taskTitle, done: false),
+          ],
+        );
+      }
+      return list;
+    }).toList();
+  }
+
+  void toggleTask(String dayListId, String taskId) {
+    state = state.map((list) {
+      if (list.id == dayListId) {
+        return list.copyWith(
+          tasks: list.tasks.map((task) {
+            if (task.id == taskId) {
+              return task.copyWith(isDone: !task.done);
+            }
+            return task;
+          }).toList(),
+        );
+      }
+      return list;
+    }).toList();
+  }
+}
+
+
+
