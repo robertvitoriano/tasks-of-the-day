@@ -16,7 +16,7 @@ class _HomeState extends ConsumerState<HomePage> {
   int? _selectedDayListIndex;
   bool isTodoCreationModalOpen = false;
 
-  void selectTodo(int index) {
+  void selectDayList(int index) {
     setState(() => _selectedDayListIndex = index);
   }
 
@@ -24,7 +24,7 @@ class _HomeState extends ConsumerState<HomePage> {
     return [
       for (var i = 0; i < dayLists.length; i++)
         GestureDetector(
-          onTap: () => selectTodo(i),
+          onTap: () => selectDayList(i),
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -49,18 +49,20 @@ class _HomeState extends ConsumerState<HomePage> {
   Widget _buildBodyContent(List<DayList> dayLists) {
     bool isSomeDayListSelected = _selectedDayListIndex != null;
 
-    final selectedDayList = dayLists[_selectedDayListIndex!];
+    if (isSomeDayListSelected) {
+      final selectedDayList = dayLists[_selectedDayListIndex!];
 
-    return isSomeDayListSelected
-        ? TasksList(
-            taskListId: selectedDayList.id,
-            title: selectedDayList.title,
-            tasks: selectedDayList.tasks,
-          )
-        : Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [const SizedBox(height: 20), ...getDayLists(dayLists)],
-          );
+      return TasksList(
+        taskListId: selectedDayList.id,
+        title: selectedDayList.title,
+        tasks: selectedDayList.tasks,
+      );
+    }
+    
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [const SizedBox(height: 20), ...getDayLists(dayLists)],
+    );
   }
 
   @override
