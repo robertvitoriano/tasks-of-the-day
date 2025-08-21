@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/domain/entities/day_list.dart';
+import 'package:flutter_todo/domain/entities/task.dart';
 import 'package:uuid/uuid.dart';
 
 final _uuid = Uuid();
