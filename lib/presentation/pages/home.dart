@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_todo/domain/entities/task.dart';
 import 'package:flutter_todo/domain/entities/day_list.dart';
 import 'package:flutter_todo/presentation/widgets/tasks_list.dart';
 import 'package:flutter_todo/presentation/pages/new_task.dart';
-import 'package:flutter_todo/providers/tasks_provider.dart';
+import 'package:flutter_todo/providers/tasks_provider.dart'; 
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -15,17 +14,15 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<HomePage> {
   int? _selectedDayListIndex;
-
   bool isTodoCreationModalOpen = false;
-  final List<DayList> dayLists = [];
+
   void selectTodo(int index) {
     setState(() => _selectedDayListIndex = index);
   }
 
-  List<Widget> getDayLists() {
-    final List<Widget> lists = [];
-    for (var i = 0; i < dayLists.length; i++) {
-      lists.add(
+  List<Widget> getDayLists(List<DayList> dayLists) {
+    return [
+      for (var i = 0; i < dayLists.length; i++)
         GestureDetector(
           onTap: () => selectTodo(i),
           child: Card(
@@ -38,31 +35,16 @@ class _HomeState extends ConsumerState<HomePage> {
             ),
           ),
         ),
-      );
-    }
-    return lists;
-  }
-
-  void onChanged(int index, bool? done) {
-    if (_selectedDayListIndex == null) return;
-    setState(() {
-      dayLists[_selectedDayListIndex!].tasks[index].done = done ?? false;
-    });
+    ];
   }
 
   void _saveDayList(String text) {
-    // setState(() {
-    //   dayLists.add(DayList(id: dayLists.length + 1, title: text));
-    // });
+    ref.read(dayListsProvider.notifier).addDayList(text);
     _toggleTodoCreationModal();
   }
 
-  void _saveTask(String title, int dayListId) {
-    if (_selectedDayListIndex == null) return;
-    setState(() {
-      // final tasks = dayLists[_selectedDayListIndex!].tasks;
-      // tasks.add(Task(dayListId: dayListId, id: tasks.length + 1, title: title));
-    });
+  void _saveTask(String title, String dayListId) {
+    ref.read(dayListsProvider.notifier).addTask(dayListId, title);
     _toggleTodoCreationModal();
   }
 
@@ -72,7 +54,7 @@ class _HomeState extends ConsumerState<HomePage> {
     });
   }
 
-  Widget _buildBodyContent() {
+  Widget _buildBodyContent(List<DayList> dayLists) {
     bool isSomeDayListSelected = _selectedDayListIndex != null;
 
     if (!isSomeDayListSelected) {
@@ -83,31 +65,33 @@ class _HomeState extends ConsumerState<HomePage> {
             )
           : Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [SizedBox(height: 20), ...getDayLists()],
+              children: [const SizedBox(height: 20), ...getDayLists(dayLists)],
             );
     }
+
+    final selectedDayList = dayLists[_selectedDayListIndex!];
 
     return isTodoCreationModalOpen
         ? NewTask(
             title: "Create Item",
-            onSave: (String text) => _saveTask(text, _selectedDayListIndex!),
+            onSave: (String text) => _saveTask(text, selectedDayList.id),
           )
         : TasksList(
-            taskListId: _selectedDayListIndex! ,
-            title: dayLists[_selectedDayListIndex!].title,
-            // tasks: dayLists[_selectedDayListIndex!].tasks,
-            tasks: ref.watch(tasksProvider)
+            taskListId: selectedDayList.id,
+            title: selectedDayList.title,
+            tasks: selectedDayList.tasks,
           );
   }
 
   @override
   Widget build(BuildContext context) {
-    
+    final dayLists = ref.watch(dayListsProvider);
+
     return Scaffold(
-      body: _buildBodyContent(),
+      body: _buildBodyContent(dayLists),
       backgroundColor: Colors.transparent,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, 'new-task'),
+        onPressed: _toggleTodoCreationModal,
         backgroundColor: Colors.amber[800],
         child: const Icon(Icons.add),
       ),

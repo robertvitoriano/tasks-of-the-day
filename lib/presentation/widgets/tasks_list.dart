@@ -6,7 +6,7 @@ import 'package:flutter_todo/presentation/widgets/task_card.dart';
 class TasksList extends StatefulWidget {
   const TasksList({super.key, required this.taskListId, required this.title, required this.tasks});
   final String title;
-  final int taskListId;
+  final String taskListId;
   final List<Task> tasks;
 
   @override
