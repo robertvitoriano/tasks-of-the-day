@@ -18,6 +18,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
     };
     return TaskModel(
       id: fields[1] as int,
+      dayListId: fields[8] as int,
       title: fields[2] as String,
       done: fields[3] as bool,
       description: fields[4] as String,
@@ -30,7 +31,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
   @override
   void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)
@@ -44,7 +45,9 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       ..writeByte(6)
       ..write(obj.category)
       ..writeByte(7)
-      ..write(obj.dueTime);
+      ..write(obj.dueTime)
+      ..writeByte(8)
+      ..write(obj.dayListId);
   }
 
   @override

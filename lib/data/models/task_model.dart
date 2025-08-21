@@ -17,9 +17,12 @@ class TaskModel extends HiveObject {
   String category;
   @HiveField(7)
   DateTime dueTime;
+  @HiveField(8)
+  int dayListId;
 
   TaskModel({
     required this.id,
+    required this.dayListId,
     required this.title,
     required this.done,
     required this.description,

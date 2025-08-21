@@ -1,5 +1,6 @@
 class Task {
   int id;
+  int dayListId;
   String title;
   String description;
   String priority;
@@ -8,6 +9,7 @@ class Task {
   bool done;
   Task({
     required this.id,
+    required this.dayListId,
     required this.title,
     this.done = false,
     this.description = "",

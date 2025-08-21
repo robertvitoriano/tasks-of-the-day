@@ -4,8 +4,9 @@ import 'package:flutter_todo/presentation/pages/new_task.dart';
 import 'package:flutter_todo/presentation/widgets/task_card.dart';
 
 class TasksList extends StatefulWidget {
-  const TasksList({super.key, required this.title, required this.tasks});
+  const TasksList({super.key, required this.taskListId, required this.title, required this.tasks});
   final String title;
+  final int taskListId;
   final List<Task> tasks;
 
   @override
@@ -41,7 +42,7 @@ class _TasksListState extends State<TasksList> {
   void _saveTodo(String title) {
     setState(() {
       widget.tasks.add(
-        Task(id: widget.tasks.length + 1, title: title, done: false),
+        Task(id: widget.tasks.length + 1, dayListId: widget.taskListId, title: title, done: false),
       );
     });
     _toggleTodoOpenModal();

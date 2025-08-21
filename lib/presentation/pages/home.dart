@@ -14,12 +14,12 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomeState extends ConsumerState<HomePage> {
-  int? _selectedTodoIndex;
+  int? _selectedDayListIndex;
 
   bool isTodoCreationModalOpen = false;
   final List<DayList> dayLists = [];
   void selectTodo(int index) {
-    setState(() => _selectedTodoIndex = index);
+    setState(() => _selectedDayListIndex = index);
   }
 
   List<Widget> getDayLists() {
@@ -44,9 +44,9 @@ class _HomeState extends ConsumerState<HomePage> {
   }
 
   void onChanged(int index, bool? done) {
-    if (_selectedTodoIndex == null) return;
+    if (_selectedDayListIndex == null) return;
     setState(() {
-      dayLists[_selectedTodoIndex!].tasks[index].done = done ?? false;
+      dayLists[_selectedDayListIndex!].tasks[index].done = done ?? false;
     });
   }
 
@@ -57,11 +57,11 @@ class _HomeState extends ConsumerState<HomePage> {
     _toggleTodoCreationModal();
   }
 
-  void _saveTask(String title) {
-    if (_selectedTodoIndex == null) return;
+  void _saveTask(String title, int dayListId) {
+    if (_selectedDayListIndex == null) return;
     setState(() {
-      final tasks = dayLists[_selectedTodoIndex!].tasks;
-      tasks.add(Task(id: tasks.length + 1, title: title));
+      final tasks = dayLists[_selectedDayListIndex!].tasks;
+      tasks.add(Task(dayListId: dayListId, id: tasks.length + 1, title: title));
     });
     _toggleTodoCreationModal();
   }
@@ -73,7 +73,7 @@ class _HomeState extends ConsumerState<HomePage> {
   }
 
   Widget _buildBodyContent() {
-    bool isSomeDayListSelected = _selectedTodoIndex != null;
+    bool isSomeDayListSelected = _selectedDayListIndex != null;
 
     if (!isSomeDayListSelected) {
       return isTodoCreationModalOpen
@@ -90,11 +90,12 @@ class _HomeState extends ConsumerState<HomePage> {
     return isTodoCreationModalOpen
         ? NewTask(
             title: "Create Item",
-            onSave: (String text) => _saveTask(text),
+            onSave: (String text) => _saveTask(text, _selectedDayListIndex!),
           )
         : TasksList(
-            title: dayLists[_selectedTodoIndex!].title,
-            // tasks: dayLists[_selectedTodoIndex!].tasks,
+            taskListId: _selectedDayListIndex! ,
+            title: dayLists[_selectedDayListIndex!].title,
+            // tasks: dayLists[_selectedDayListIndex!].tasks,
             tasks: ref.watch(tasksProvider)
           );
   }

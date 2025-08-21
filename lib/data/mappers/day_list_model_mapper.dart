@@ -17,6 +17,7 @@ extension TaskModelMapper on TaskModel {
   Task toEntity() {
     return Task(
       id: id,
+      dayListId: dayListId,
       done: done,
       title: title,
       category: category,
