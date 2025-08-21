@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/domain/entities/day_list.dart';
 import 'package:flutter_todo/presentation/widgets/tasks_list.dart';
 import 'package:flutter_todo/presentation/pages/new_task.dart';
-import 'package:flutter_todo/providers/tasks_provider.dart'; 
+import 'package:flutter_todo/providers/tasks_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -40,18 +40,10 @@ class _HomeState extends ConsumerState<HomePage> {
 
   void _saveDayList(String text) {
     ref.read(dayListsProvider.notifier).addDayList(text);
-    _toggleTodoCreationModal();
   }
 
   void _saveTask(String title, String dayListId) {
     ref.read(dayListsProvider.notifier).addTask(dayListId, title);
-    _toggleTodoCreationModal();
-  }
-
-  void _toggleTodoCreationModal() {
-    setState(() {
-      isTodoCreationModalOpen = !isTodoCreationModalOpen;
-    });
   }
 
   Widget _buildBodyContent(List<DayList> dayLists) {
@@ -91,7 +83,7 @@ class _HomeState extends ConsumerState<HomePage> {
       body: _buildBodyContent(dayLists),
       backgroundColor: Colors.transparent,
       floatingActionButton: FloatingActionButton(
-        onPressed: _toggleTodoCreationModal,
+        onPressed: () => Navigator.pushNamed(context, 'new-task'),
         backgroundColor: Colors.amber[800],
         child: const Icon(Icons.add),
       ),

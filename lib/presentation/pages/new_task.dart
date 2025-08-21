@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/domain/entities/priority.dart';
 import 'package:flutter_todo/presentation/widgets/custom_dropdown.dart';
 import 'package:flutter_todo/presentation/widgets/priority_item.dart';
@@ -6,17 +7,17 @@ import 'package:flutter_todo/presentation/widgets/custom_text_field.dart';
 
 
 
-class NewTask extends StatefulWidget {
+class NewTask extends ConsumerStatefulWidget {
   const NewTask({super.key, required this.title, required this.onSave});
 
   final String title;
   final void Function(String text) onSave;
 
   @override
-  State<NewTask> createState() => _NewTaskState();
+  ConsumerState<NewTask> createState() => _NewTaskState();
 }
 
-class _NewTaskState extends State<NewTask> {
+class _NewTaskState extends ConsumerState<NewTask> {
   final TextEditingController _newTaskController = TextEditingController();
 
   void _saveTodo() {
