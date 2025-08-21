@@ -49,29 +49,17 @@ class _HomeState extends ConsumerState<HomePage> {
   Widget _buildBodyContent(List<DayList> dayLists) {
     bool isSomeDayListSelected = _selectedDayListIndex != null;
 
-    if (!isSomeDayListSelected) {
-      return isTodoCreationModalOpen
-          ? NewTask(
-              title: "Create Todo List",
-              onSave: (String text) => _saveDayList(text),
-            )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [const SizedBox(height: 20), ...getDayLists(dayLists)],
-            );
-    }
-
     final selectedDayList = dayLists[_selectedDayListIndex!];
 
-    return isTodoCreationModalOpen
-        ? NewTask(
-            title: "Create Item",
-            onSave: (String text) => _saveTask(text, selectedDayList.id),
-          )
-        : TasksList(
+    return isSomeDayListSelected
+        ? TasksList(
             taskListId: selectedDayList.id,
             title: selectedDayList.title,
             tasks: selectedDayList.tasks,
+          )
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [const SizedBox(height: 20), ...getDayLists(dayLists)],
           );
   }
 
