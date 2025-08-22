@@ -19,6 +19,13 @@ class _HomeState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final dayLists = ref.read(dayListsProvider);
+      if (!_hasDayListForToday(dayLists)) {
+        ref.read(dayListsProvider.notifier).addTodayDayList();
+      }
+    });
   }
 
   void selectDayList(int index) {
@@ -34,7 +41,7 @@ class _HomeState extends ConsumerState<HomePage> {
           listDate.day == today.day;
     });
   }
-  
+
   List<Widget> getDayLists(List<DayList> dayLists) {
     return [
       for (var i = 0; i < dayLists.length; i++)
@@ -95,9 +102,7 @@ class _HomeState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final dayLists = ref.watch(dayListsProvider);
-    if (!_hasDayListForToday(dayLists)) {
-      addTodayDayList();
-    }
+
     return Scaffold(
       body: _buildBodyContent(dayLists),
       backgroundColor: Colors.transparent,
