@@ -86,10 +86,20 @@ class _HomeState extends ConsumerState<HomePage> {
     if (isSomeDayListSelected) {
       final selectedDayList = dayLists[_selectedDayListIndex!];
 
-      return TasksList(
-        taskListId: selectedDayList.id,
-        title: selectedDayList.title,
-        tasks: selectedDayList.tasks,
+      return Column(
+        children: [
+          Center(
+            child: Text(
+              selectedDayList.title,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+          ),
+          TasksList(
+            taskListId: selectedDayList.id,
+            title: selectedDayList.title,
+            tasks: selectedDayList.tasks,
+          ),
+        ],
       );
     }
 
