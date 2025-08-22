@@ -6,23 +6,12 @@ import 'package:uuid/uuid.dart';
 final _uuid = Uuid();
 
 class DayListsNotifier extends Notifier<List<DayList>> {
-  DayListsNotifier() : super() {
-    if (!_hasDayListForToday(state)) {
-      addTodayDayList();
-    }
-  }
-  bool _hasDayListForToday(List<DayList> dayLists) {
-    final today = DateTime.now();
-    return dayLists.any((list) {
-      final listDate = DateTime.parse(list.title);
-      return listDate.year == today.year &&
-          listDate.month == today.month &&
-          listDate.day == today.day;
-    });
-  }
+
 
   @override
-  List<DayList> build() => [];
+  List<DayList> build() {
+    return [];
+  }
 
   void addTodayDayList() {
     state = [

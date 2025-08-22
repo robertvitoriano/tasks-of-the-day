@@ -17,23 +17,24 @@ class _HomeState extends ConsumerState<HomePage> {
   bool isTodoCreationModalOpen = false;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-
   }
-  bool _hasDayListForToday(List<DayList> dayLists) {
-  final today = DateTime.now();
-  return dayLists.any((list) {
-    final listDate = DateTime.parse(list.title); // assuming you use date as title
-    return listDate.year == today.year &&
-           listDate.month == today.month &&
-           listDate.day == today.day;
-  });
-}
+
   void selectDayList(int index) {
     setState(() => _selectedDayListIndex = index);
   }
 
+  bool _hasDayListForToday(List<DayList> dayLists) {
+    final today = DateTime.now();
+    return dayLists.any((list) {
+      final listDate = DateTime.parse(list.title);
+      return listDate.year == today.year &&
+          listDate.month == today.month &&
+          listDate.day == today.day;
+    });
+  }
+  
   List<Widget> getDayLists(List<DayList> dayLists) {
     return [
       for (var i = 0; i < dayLists.length; i++)
@@ -52,7 +53,7 @@ class _HomeState extends ConsumerState<HomePage> {
     ];
   }
 
-  void _saveDayList() {
+  void addTodayDayList() {
     ref.read(dayListsProvider.notifier).addTodayDayList();
   }
 
@@ -94,7 +95,9 @@ class _HomeState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final dayLists = ref.watch(dayListsProvider);
-
+    if (!_hasDayListForToday(dayLists)) {
+      addTodayDayList();
+    }
     return Scaffold(
       body: _buildBodyContent(dayLists),
       backgroundColor: Colors.transparent,
