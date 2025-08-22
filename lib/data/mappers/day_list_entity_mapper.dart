@@ -9,6 +9,7 @@ extension DayListEntityMapper on DayList {
       id: id,
       title: title,
       tasks: tasks.map((i) => i.toModel()).toList(),
+      date: date
     );
   }
 }

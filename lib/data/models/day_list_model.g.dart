@@ -19,6 +19,7 @@ class DayListModelAdapter extends TypeAdapter<DayListModel> {
     return DayListModel(
       id: fields[1] as String,
       title: fields[2] as String,
+      date: fields[4] as DateTime,
       tasks: (fields[3] as List?)?.cast<TaskModel>(),
     );
   }
@@ -26,13 +27,15 @@ class DayListModelAdapter extends TypeAdapter<DayListModel> {
   @override
   void write(BinaryWriter writer, DayListModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)
       ..write(obj.title)
       ..writeByte(3)
-      ..write(obj.tasks);
+      ..write(obj.tasks)
+      ..writeByte(4)
+      ..write(obj.date);
   }
 
   @override

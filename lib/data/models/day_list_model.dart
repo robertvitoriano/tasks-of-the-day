@@ -10,6 +10,7 @@ class DayListModel extends HiveObject {
   String title;
   @HiveField(3)
   List<TaskModel> tasks = [];
-
-  DayListModel({required this.id, required this.title, List<TaskModel>? tasks});
+  @HiveField(4)
+  DateTime date;
+  DayListModel({required this.id, required this.title, required this.date, List<TaskModel>? tasks,});
 }

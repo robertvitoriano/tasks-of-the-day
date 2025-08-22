@@ -4,14 +4,13 @@ import 'package:flutter_todo/domain/entities/priority.dart';
 import 'package:flutter_todo/presentation/widgets/custom_dropdown.dart';
 import 'package:flutter_todo/presentation/widgets/priority_item.dart';
 import 'package:flutter_todo/presentation/widgets/custom_text_field.dart';
-
-
+import 'package:flutter_todo/providers/tasks_provider.dart';
 
 class NewTask extends ConsumerStatefulWidget {
-  const NewTask({super.key, required this.title, required this.onSave});
+  const NewTask({super.key, required this.dayListId, required this.title});
 
   final String title;
-  final void Function(String text) onSave;
+  final String dayListId;
 
   @override
   ConsumerState<NewTask> createState() => _NewTaskState();
@@ -20,10 +19,10 @@ class NewTask extends ConsumerStatefulWidget {
 class _NewTaskState extends ConsumerState<NewTask> {
   final TextEditingController _newTaskController = TextEditingController();
 
-  void _saveTodo() {
+  void _saveTask() {
     final text = _newTaskController.text.trim();
     if (text.isNotEmpty) {
-      widget.onSave(text);
+      ref.read(dayListsProvider.notifier).addTask(widget.dayListId, text);
     }
   }
 
@@ -133,7 +132,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
                 ],
               ),
               SizedBox(height: 20),
-              _Buttons(saveTodo: _saveTodo),
+              _Buttons(saveTask: () => _saveTask()),
             ],
           ),
         ),
@@ -143,15 +142,15 @@ class _NewTaskState extends ConsumerState<NewTask> {
 }
 
 class _Buttons extends StatelessWidget {
-  const _Buttons({required this.saveTodo});
-  final VoidCallback saveTodo;
+  const _Buttons({required this.saveTask});
+  final VoidCallback saveTask;
   @override
   Widget build(Object context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-          onPressed: saveTodo,
+          onPressed: saveTask,
           style: TextButton.styleFrom(
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
@@ -170,7 +169,7 @@ class _Buttons extends StatelessWidget {
         ),
         SizedBox(width: 20),
         TextButton(
-          onPressed: saveTodo,
+          onPressed: saveTask,
           style: TextButton.styleFrom(
             backgroundColor: Colors.amber[800],
             foregroundColor: Colors.white,

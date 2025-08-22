@@ -16,6 +16,20 @@ class _HomeState extends ConsumerState<HomePage> {
   int? _selectedDayListIndex;
   bool isTodoCreationModalOpen = false;
 
+  @override
+  void initState(){
+    super.initState();
+
+  }
+  bool _hasDayListForToday(List<DayList> dayLists) {
+  final today = DateTime.now();
+  return dayLists.any((list) {
+    final listDate = DateTime.parse(list.title); // assuming you use date as title
+    return listDate.year == today.year &&
+           listDate.month == today.month &&
+           listDate.day == today.day;
+  });
+}
   void selectDayList(int index) {
     setState(() => _selectedDayListIndex = index);
   }
@@ -38,12 +52,24 @@ class _HomeState extends ConsumerState<HomePage> {
     ];
   }
 
-  void _saveDayList(String text) {
-    ref.read(dayListsProvider.notifier).addDayList(text);
+  void _saveDayList() {
+    ref.read(dayListsProvider.notifier).addTodayDayList();
   }
 
-  void _saveTask(String title, String dayListId) {
-    ref.read(dayListsProvider.notifier).addTask(dayListId, title);
+  void _navigateToNewTaskPage() {
+    if (_selectedDayListIndex != null) {
+      final dayLists = ref.watch(dayListsProvider);
+      final selectedDayList = dayLists[_selectedDayListIndex!];
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => NewTask(
+            dayListId: selectedDayList.id,
+            title: "Create Task in ${selectedDayList.title}",
+          ),
+        ),
+      );
+    }
   }
 
   Widget _buildBodyContent(List<DayList> dayLists) {
@@ -58,7 +84,7 @@ class _HomeState extends ConsumerState<HomePage> {
         tasks: selectedDayList.tasks,
       );
     }
-    
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [const SizedBox(height: 20), ...getDayLists(dayLists)],
@@ -73,7 +99,7 @@ class _HomeState extends ConsumerState<HomePage> {
       body: _buildBodyContent(dayLists),
       backgroundColor: Colors.transparent,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, 'new-task'),
+        onPressed: () => _navigateToNewTaskPage(),
         backgroundColor: Colors.amber[800],
         child: const Icon(Icons.add),
       ),

@@ -9,10 +9,10 @@ class DayListsNotifier extends Notifier<List<DayList>> {
   @override
   List<DayList> build() => [];
 
-  void addDayList(String title) {
+  void addTodayDayList() {
     state = [
       ...state,
-      DayList(id: _uuid.v4(), title: title, tasks: []),
+      DayList(id: _uuid.v4(), title: DateTime.now().toIso8601String().split('T')[0], tasks: [], date: DateTime.now()),
     ];
   }
 
