@@ -6,23 +6,22 @@ import 'package:uuid/uuid.dart';
 final _uuid = Uuid();
 
 class DayListsNotifier extends Notifier<List<DayList>> {
-
-
   @override
   List<DayList> build() {
     return [];
   }
 
   void addTodayDayList() {
-    state = [
-      ...state,
-      DayList(
-        id: _uuid.v4(),
-        title: DateTime.now().toIso8601String().split('T')[0],
-        tasks: [],
-        date: DateTime.now(),
-      ),
-    ];
+    final today = DateTime.now();
+    final todayKey = today.toIso8601String().split('T')[0];
+
+    final alreadyExists = state.any((list) => list.title == todayKey);
+    if (!alreadyExists) {
+      state = [
+        ...state,
+        DayList(id: _uuid.v4(), title: todayKey, tasks: [], date: today),
+      ];
+    }
   }
 
   void removeDayList(String id) {
