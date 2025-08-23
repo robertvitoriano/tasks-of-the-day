@@ -5,6 +5,7 @@ import 'package:flutter_todo/presentation/widgets/custom_dropdown.dart';
 import 'package:flutter_todo/presentation/widgets/priority_item.dart';
 import 'package:flutter_todo/presentation/widgets/custom_text_field.dart';
 import 'package:flutter_todo/providers/tasks_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class NewTask extends ConsumerStatefulWidget {
   const NewTask({super.key, required this.dayListId, required this.title});
@@ -23,7 +24,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
     final text = _newTaskController.text.trim();
     if (text.isNotEmpty) {
       ref.read(dayListsProvider.notifier).addTask(widget.dayListId, text);
-      Navigator.pushNamed(context, '/day-list/${widget.dayListId}');
+      context.go('/day-list/${widget.dayListId}');
     }
   }
 
@@ -51,7 +52,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            context.go( '/day-list/${widget.dayListId}');
           },
         ),
       ),

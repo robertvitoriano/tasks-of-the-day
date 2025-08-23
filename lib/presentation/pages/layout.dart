@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/extensions/colors.dart';
-import 'package:flutter_todo/presentation/pages/completed.dart';
-import 'package:flutter_todo/presentation/pages/home.dart';
-import 'package:flutter_todo/presentation/pages/profile.dart';
+import 'package:flutter_todo/presentation/pages/completed_page.dart';
+import 'package:flutter_todo/presentation/pages/home_page.dart';
+import 'package:flutter_todo/presentation/pages/profile_page.dart';
 
 class Layout extends StatefulWidget {
   const Layout({super.key});

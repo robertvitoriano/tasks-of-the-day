@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/domain/entities/task.dart';
-import 'package:flutter_todo/presentation/pages/new_task.dart';
+import 'package:flutter_todo/presentation/pages/new_task_page.dart';
 import 'package:flutter_todo/presentation/widgets/task_card.dart';
 
 class TasksList extends StatefulWidget {
