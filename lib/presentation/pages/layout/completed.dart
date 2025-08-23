@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CompletedPage extends StatelessWidget {
-  const CompletedPage({super.key});
+class Completed extends StatelessWidget {
+  const Completed({super.key});
 
   @override
   Widget build(BuildContext context) {

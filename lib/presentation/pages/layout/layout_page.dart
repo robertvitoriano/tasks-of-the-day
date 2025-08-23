@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/extensions/colors.dart';
-import 'package:flutter_todo/presentation/pages/completed_page.dart';
-import 'package:flutter_todo/presentation/pages/home_page.dart';
-import 'package:flutter_todo/presentation/pages/profile_page.dart';
+import 'package:flutter_todo/presentation/pages/layout/completed.dart';
+import 'package:flutter_todo/presentation/pages/layout/home.dart';
+import 'package:flutter_todo/presentation/pages/layout/profile.dart';
 
 class Layout extends StatefulWidget {
   const Layout({super.key});
@@ -18,7 +18,7 @@ class _LayoutState extends State<Layout> {
   @override
   void initState() {
     super.initState();
-    _pages = [HomePage(), const CompletedPage(), const ProfilePage()];
+    _pages = [Home(), const Completed(), const Profile()];
   }
 
   @override

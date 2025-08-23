@@ -4,14 +4,14 @@ import 'package:flutter_todo/domain/entities/day_list.dart';
 import 'package:flutter_todo/providers/tasks_provider.dart';
 import 'package:go_router/go_router.dart';
 
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+class Home extends ConsumerStatefulWidget {
+  const Home({super.key});
 
   @override
-  ConsumerState<HomePage> createState() => _HomeState();
+  ConsumerState<Home> createState() => _HomeState();
 }
 
-class _HomeState extends ConsumerState<HomePage> {
+class _HomeState extends ConsumerState<Home> {
   bool isTodoCreationModalOpen = false;
 
   @override

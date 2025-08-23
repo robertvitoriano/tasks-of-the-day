@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/data/models/task_model.dart';
 import 'package:flutter_todo/data/models/day_list_model.dart';
 import 'package:flutter_todo/presentation/pages/day_list_page.dart';
-import 'package:flutter_todo/presentation/pages/layout.dart';
+import 'package:flutter_todo/presentation/pages/layout/layout_page.dart';
 import 'package:flutter_todo/presentation/pages/new_task_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
