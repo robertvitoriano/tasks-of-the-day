@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CustomDropdown extends StatelessWidget {
-  CustomDropdown({
+  const CustomDropdown({
     super.key,
     required this.onSelect,
     this.selectedValue,
     this.items,
   });
 
-  String? selectedValue;
-  List<DropdownMenuItem<String>>? items;
+  final String? selectedValue;
+  final List<DropdownMenuItem<String>>? items;
 
   final Function(String?)? onSelect;
 
