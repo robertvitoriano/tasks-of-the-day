@@ -23,6 +23,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
     final text = _newTaskController.text.trim();
     if (text.isNotEmpty) {
       ref.read(dayListsProvider.notifier).addTask(widget.dayListId, text);
+      Navigator.pushNamed(context, '/day-list/${widget.dayListId}');
     }
   }
 
