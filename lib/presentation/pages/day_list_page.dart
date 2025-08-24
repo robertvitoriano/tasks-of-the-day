@@ -25,13 +25,13 @@ class _DayListPage extends ConsumerState<DayListPage> {
     DayList selectedDayList = dayLists.firstWhere(
       (d) => d.id == widget.dayListId,
     );
-    final totalQuantity = selectedDayList.tasks.length;
-    final doneQuantity = selectedDayList.tasks
+    final totalCount = selectedDayList.tasks.length;
+    final doneCount = selectedDayList.tasks
         .where((t) => t.done == true)
         .length;
-    final donePercentage = totalQuantity == 0
+    final donePercentage = totalCount == 0
         ? 0.0
-        : (doneQuantity / totalQuantity) * 100;
+        : (doneCount / totalCount) * 100;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -47,7 +47,7 @@ class _DayListPage extends ConsumerState<DayListPage> {
             children: [
               _Header(),
               SizedBox(height: 20),
-              _ProgressCard(donePercentage: donePercentage),
+              _ProgressCard(donePercentage: donePercentage,doneCount: doneCount, totalCount: totalCount,),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -105,8 +105,10 @@ class _Header extends StatelessWidget {
 }
 
 class _ProgressCard extends StatelessWidget {
-  const _ProgressCard({super.key, required this.donePercentage});
+  const _ProgressCard({super.key, required this.donePercentage, required this.doneCount, required this.totalCount});
   final double donePercentage;
+  final int doneCount;
+  final int totalCount;
   @override
   Widget build(BuildContext context) {
     return CustomCard(
@@ -126,12 +128,12 @@ class _ProgressCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 5),
-                    Text("1 of 4 tasks completed"),
+                    Text("$doneCount of $totalCount tass completed"),
                   ],
                 ),
               ),
               Text(
-                donePercentage.toStringAsFixed(2),
+                '${donePercentage.toStringAsFixed(0)} %',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
@@ -149,40 +151,88 @@ class _ProgressCard extends StatelessWidget {
   }
 }
 
-class _ProgressBar extends StatelessWidget {
+class _ProgressBar extends StatefulWidget {
   const _ProgressBar({required this.donePercentage});
   final double donePercentage;
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ProgressBarState();
+  }
+}
+
+class _ProgressBarState extends State<_ProgressBar>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+    _animation = Tween<double>(begin: 0, end: widget.donePercentage).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+    _animationController.forward();
+  }
+
+  @override
+  void didUpdateWidget(covariant oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.donePercentage != widget.donePercentage) {
+      _animation = Tween<double>(begin: 0, end: widget.donePercentage).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+      );
+      _animationController
+        ..reset()
+        ..forward();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) => Row(
-        children: [
-          Container(
-            width: ((donePercentage) * constraints.maxWidth) / 100,
-            height: 10,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(5),
-                bottomLeft: Radius.circular(5),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              width: 0,
-              height: 10,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(5),
-                  bottomRight: Radius.circular(5),
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return LayoutBuilder(
+          builder: (context, constraints) => Row(
+            children: [
+              Container(
+                width: ((widget.donePercentage) * constraints.maxWidth) / 100,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    bottomLeft: Radius.circular(5),
+                  ),
                 ),
               ),
-            ),
+              Expanded(
+                child: Container(
+                  width: 0,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(5),
+                      bottomRight: Radius.circular(5),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
   }
 }
