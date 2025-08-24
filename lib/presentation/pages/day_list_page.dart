@@ -29,7 +29,9 @@ class _DayListPage extends ConsumerState<DayListPage> {
     final doneQuantity = selectedDayList.tasks
         .where((t) => t.done == true)
         .length;
-    final donePercentage = totalQuantity == 0 ? 0.0 : (doneQuantity / totalQuantity) * 100;
+    final donePercentage = totalQuantity == 0
+        ? 0.0
+        : (doneQuantity / totalQuantity) * 100;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -40,28 +42,30 @@ class _DayListPage extends ConsumerState<DayListPage> {
         ),
       ),
       body: PageContentWrapper(
-        child: Column(
-          children: [
-            _Header(),
-            SizedBox(height: 20),
-            _ProgressCard(donePercentage: donePercentage),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Tasks",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            TasksList(
-              taskListId: selectedDayList.id,
-              title: selectedDayList.title,
-              tasks: selectedDayList.tasks,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _Header(),
+              SizedBox(height: 20),
+              _ProgressCard(donePercentage: donePercentage),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Tasks",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              TasksList(
+                taskListId: selectedDayList.id,
+                title: selectedDayList.title,
+                tasks: selectedDayList.tasks,
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -150,12 +154,11 @@ class _ProgressBar extends StatelessWidget {
   final double donePercentage;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 600,
-      child: Row(
+    return LayoutBuilder(
+      builder: (context, constraints) => Row(
         children: [
           Container(
-            width: ((donePercentage) * 600)/100,
+            width: ((donePercentage) * constraints.maxWidth) / 100,
             height: 10,
             decoration: BoxDecoration(
               color: Colors.black,

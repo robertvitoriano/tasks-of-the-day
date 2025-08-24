@@ -12,7 +12,6 @@ class Home extends ConsumerStatefulWidget {
 }
 
 class _HomeState extends ConsumerState<Home> {
-  bool isTodoCreationModalOpen = false;
 
   @override
   void initState() {
