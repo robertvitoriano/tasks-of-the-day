@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/domain/entities/task.dart';
-import 'package:flutter_todo/presentation/pages/new_task_page.dart';
 import 'package:flutter_todo/presentation/widgets/task_card.dart';
 
 class TasksList extends StatefulWidget {
@@ -21,21 +20,15 @@ class TasksList extends StatefulWidget {
 class _TasksListState extends State<TasksList> {
   bool isTodoCreationModalOpen = false;
 
-  void onChanged(int index, bool value) {
-    setState(() {
-      widget.tasks[index].done = value;
-    });
-  }
-
   List<Widget> getListOftasks() {
-    List<Widget> tasks = [];
+    List<Widget> taskCards = [];
 
     for (var i = 0; i < widget.tasks.length; i++) {
-      tasks.add(
-        TaskCard(index: i, onChanged: onChanged, todo: widget.tasks[i]),
+      taskCards.add(
+        TaskCard(id: widget.tasks[i].id, taskListId: widget.taskListId),
       );
     }
-    return tasks;
+    return taskCards;
   }
 
   @override

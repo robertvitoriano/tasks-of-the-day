@@ -1,11 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/domain/entities/task.dart';
+import 'package:flutter_todo/providers/tasks_provider.dart';
+
+class TaskCard extends ConsumerStatefulWidget {
+  const TaskCard({super.key, required this.id, required this.taskListId});
+
+  final String id;
+  final String taskListId;
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return _TaskCard();
+  }
+}
+
+class _TaskCard extends ConsumerState<TaskCard> {
+  void onChanged(String taskId, bool value) {
+    ref.read(dayListsProvider.notifier).toggleTask(widget.taskListId, taskId);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dayLists = ref.watch(dayListsProvider);
+    final task = dayLists
+        .firstWhere((d) => d.id == widget.taskListId)
+        .tasks
+        .firstWhere((t) => t.id == widget.id);
+        
+    return Card(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: _TodoContent(onChanged: onChanged, todo: task, id: widget.id),
+      ),
+    );
+  }
+}
 
 class _TodoHeader extends StatelessWidget {
-  const _TodoHeader({required this.todo, required this.index});
+  const _TodoHeader({required this.todo, required this.id});
 
   final Task todo;
-  final int index;
+  final String id;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,7 +58,7 @@ class _TodoHeader extends StatelessWidget {
           ),
         ),
         Text(
-          '7:00',
+          '${todo.dueTime.hour.toString()}:${todo.dueTime.minute.toString()}',
           style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
         ),
       ],
@@ -64,12 +100,12 @@ class _TodoContent extends StatelessWidget {
   const _TodoContent({
     required this.onChanged,
     required this.todo,
-    required this.index,
+    required this.id,
   });
 
-  final void Function(int todoIndex, bool newValue) onChanged;
+  final void Function(String todoId, bool newValue) onChanged;
   final Task todo;
-  final int index;
+  final String id;
   @override
   Widget build(Object context) {
     return Row(
@@ -79,7 +115,7 @@ class _TodoContent extends StatelessWidget {
           value: todo.done,
           onChanged: (bool? newValue) {
             if (newValue != null) {
-              onChanged(index, newValue);
+              onChanged(id, newValue);
             }
           },
         ),
@@ -87,7 +123,7 @@ class _TodoContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _TodoHeader(todo: todo, index: index),
+              _TodoHeader(todo: todo, id: id),
               const Text(
                 "New todo created",
                 style: TextStyle(color: Colors.grey, fontSize: 12),
@@ -98,30 +134,6 @@ class _TodoContent extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class TaskCard extends StatelessWidget {
-  const TaskCard({
-    super.key,
-    required this.onChanged,
-    required this.todo,
-    required this.index,
-  });
-
-  final void Function(int todoIndex, bool newValue) onChanged;
-  final Task todo;
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: _TodoContent(onChanged: onChanged, todo: todo, index: index),
-      ),
     );
   }
 }
