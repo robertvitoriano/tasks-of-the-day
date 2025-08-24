@@ -200,7 +200,7 @@ class _ProgressBarState extends State<_ProgressBar>
           builder: (context, constraints) => Row(
             children: [
               Container(
-                width: ((widget.donePercentage) * constraints.maxWidth) / 100,
+                width: (_animation.value * constraints.maxWidth) / 100,
                 height: 10,
                 decoration: BoxDecoration(
                   color: Colors.black,
