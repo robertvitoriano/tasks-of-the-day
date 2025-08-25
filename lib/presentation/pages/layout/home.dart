@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/domain/entities/day_list.dart';
-import 'package:flutter_todo/providers/tasks_provider.dart';
+import 'package:flutter_todo/providers/day_lists_provider_provider.dart';
 import 'package:go_router/go_router.dart';
 
 class Home extends ConsumerStatefulWidget {
@@ -12,7 +12,6 @@ class Home extends ConsumerStatefulWidget {
 }
 
 class _HomeState extends ConsumerState<Home> {
-
   @override
   void initState() {
     super.initState();
@@ -66,9 +65,11 @@ class _HomeState extends ConsumerState<Home> {
     final dayLists = ref.watch(dayListsProvider);
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [const SizedBox(height: 20), ...getDayLists(dayLists)],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [const SizedBox(height: 20), ...getDayLists(dayLists)],
+        ),
       ),
       backgroundColor: Colors.transparent,
     );

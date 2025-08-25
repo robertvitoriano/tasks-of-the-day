@@ -17,10 +17,17 @@ class DayListRepositoryImpl implements DayListRepository {
   }
 
   @override
-  Future<void> storeDayList({
-    required String id,
-    required DayList dayList,
-  }) async {
-    await dayListsLocalDataSource.saveTodo(key: id, dayList: dayList.toModel());
+  Future<void> storeDayList({required DayList dayList}) async {
+
+    await dayListsLocalDataSource.saveDayList(
+      key: dayList.id,
+      dayList: dayList.toModel(),
+    );
+  }
+
+  @override
+  List<DayList> getDayLists() {
+    final dayLists = dayListsLocalDataSource.getAll();
+    return dayLists.map((dayList) => dayList.toEntity()).toList();
   }
 }

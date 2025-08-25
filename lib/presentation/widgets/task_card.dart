@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/domain/entities/task.dart';
-import 'package:flutter_todo/providers/tasks_provider.dart';
+import 'package:flutter_todo/providers/day_lists_provider_provider.dart';
 
 class TaskCard extends ConsumerStatefulWidget {
   const TaskCard({super.key, required this.id, required this.taskListId});

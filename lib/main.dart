@@ -6,6 +6,7 @@ import 'package:flutter_todo/data/models/day_list_model.dart';
 import 'package:flutter_todo/presentation/pages/day_list_page.dart';
 import 'package:flutter_todo/presentation/pages/layout/layout_page.dart';
 import 'package:flutter_todo/presentation/pages/new_task_page.dart';
+import 'package:flutter_todo/providers/day_lists_repository_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -19,7 +20,14 @@ void main() async {
     Hive.registerAdapter(TaskModelAdapter());
     Hive.registerAdapter(DayListModelAdapter());
   }
-  runApp(const ProviderScope(child: MyApp()));
+  final box = await Hive.openBox<DayListModel>('day_lists');
+
+  runApp(
+    ProviderScope(
+      overrides: [dayListsProvider.overrideWithValue(box)],
+      child: const MyApp(),
+    ),
+  );
 }
 
 final router = GoRouter(

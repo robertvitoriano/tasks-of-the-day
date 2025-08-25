@@ -5,7 +5,7 @@ class DayListsLocalDatasource {
   final Box<DayListModel> box;
 
   DayListsLocalDatasource(this.box);
-  Future<void> saveTodo({
+  Future<void> saveDayList({
     required String key,
     required DayListModel dayList,
   }) async {
@@ -19,4 +19,7 @@ class DayListsLocalDatasource {
 
     return dayList;
   }
+List<DayListModel> getAll() {
+  return box.values.toList();
+}
 }

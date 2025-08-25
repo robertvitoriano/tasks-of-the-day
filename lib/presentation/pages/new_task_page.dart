@@ -4,7 +4,7 @@ import 'package:flutter_todo/domain/entities/priority.dart';
 import 'package:flutter_todo/presentation/widgets/custom_dropdown.dart';
 import 'package:flutter_todo/presentation/widgets/priority_item.dart';
 import 'package:flutter_todo/presentation/widgets/custom_text_field.dart';
-import 'package:flutter_todo/providers/tasks_provider.dart';
+import 'package:flutter_todo/providers/day_lists_provider_provider.dart';
 import 'package:go_router/go_router.dart';
 
 class NewTask extends ConsumerStatefulWidget {

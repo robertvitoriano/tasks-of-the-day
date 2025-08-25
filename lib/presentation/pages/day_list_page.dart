@@ -4,7 +4,7 @@ import 'package:flutter_todo/domain/entities/day_list.dart';
 import 'package:flutter_todo/presentation/widgets/custom_card.dart';
 import 'package:flutter_todo/presentation/widgets/page_wrapper.dart';
 import 'package:flutter_todo/presentation/widgets/tasks_list.dart';
-import 'package:flutter_todo/providers/tasks_provider.dart';
+import 'package:flutter_todo/providers/day_lists_provider_provider.dart';
 import 'package:go_router/go_router.dart';
 
 class DayListPage extends ConsumerStatefulWidget {
