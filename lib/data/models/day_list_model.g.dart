@@ -20,7 +20,7 @@ class DayListModelAdapter extends TypeAdapter<DayListModel> {
       id: fields[1] as String,
       title: fields[2] as String,
       date: fields[4] as DateTime,
-      tasks: (fields[3] as List?)?.cast<TaskModel>(),
+      tasks: (fields[3] as HiveList?)?.castHiveList(),
     );
   }
 

@@ -19,12 +19,14 @@ void main() async {
     Hive.init(dir.path);
     Hive.registerAdapter(TaskModelAdapter());
     Hive.registerAdapter(DayListModelAdapter());
+    
   }
-  final box = await Hive.openBox<DayListModel>('day_lists');
+await Hive.openBox<TaskModel>('tasks');
+final dayListBox = await Hive.openBox<DayListModel>('day_lists');
 
   runApp(
     ProviderScope(
-      overrides: [dayListsProvider.overrideWithValue(box)],
+      overrides: [dayListsProvider.overrideWithValue(dayListBox)],
       child: const MyApp(),
     ),
   );

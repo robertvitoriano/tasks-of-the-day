@@ -6,11 +6,21 @@ part 'day_list_model.g.dart';
 class DayListModel extends HiveObject {
   @HiveField(1)
   String id;
+
   @HiveField(2)
   String title;
+
   @HiveField(3)
-  List<TaskModel> tasks = [];
+  HiveList<TaskModel>? tasks;
+
   @HiveField(4)
   DateTime date;
-  DayListModel({required this.id, required this.title, required this.date, List<TaskModel>? tasks,});
+
+  DayListModel({
+    required this.id,
+    required this.title,
+    required this.date,
+    this.tasks,
+  });
+
 }
