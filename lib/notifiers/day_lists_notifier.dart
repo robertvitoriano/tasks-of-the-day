@@ -81,6 +81,5 @@ class DayListsNotifier extends Notifier<List<DayList>> {
 
   loadDayLists() {
     state = dayListRepository.getDayLists();
-    print(state[0].tasks);
   }
 }
