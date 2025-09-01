@@ -21,6 +21,7 @@ class NewTask extends ConsumerStatefulWidget {
 class _NewTaskState extends ConsumerState<NewTask> {
   final _newTaskDescriptionController = TextEditingController();
   final _newTaskTitleController = TextEditingController();
+  DateTime? _dueTime;
 
   void _saveTask() {
     final description = _newTaskDescriptionController.text.trim();
@@ -35,8 +36,31 @@ class _NewTaskState extends ConsumerState<NewTask> {
             category: selectedCategory!,
             title: title,
             priority: selectedPriority!,
+            dueTime: _dueTime != null ? _dueTime! : DateTime.now(),
           );
       context.go('/day-list/${widget.dayListId}');
+    }
+  }
+
+  Future<void> _pickDueTime() async {
+    final now = DateTime.now();
+    final pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (pickedTime != null) {
+      final dueDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
+
+      setState(() {
+        _dueTime = dueDateTime;
+      });
     }
   }
 
@@ -132,6 +156,24 @@ class _NewTaskState extends ConsumerState<NewTask> {
                     },
                   ),
                 ],
+              ),
+              SizedBox(height: 20),
+              InkWell(
+                onTap: _pickDueTime,
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    labelText: "Due Time",
+                    border: OutlineInputBorder(),
+                  ),
+                  child: Text(
+                    _dueTime != null
+                        ? "${_dueTime!.hour}:${_dueTime!.minute}"
+                        : "Select a time",
+                    style: TextStyle(
+                      color: _dueTime == null ? Colors.grey : Colors.black,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 20),
               _Buttons(saveTask: () => _saveTask()),
