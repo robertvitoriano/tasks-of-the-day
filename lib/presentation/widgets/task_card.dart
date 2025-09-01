@@ -124,8 +124,8 @@ class _TodoContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _TodoHeader(todo: todo, id: id),
-              const Text(
-                "New todo created",
+              Text(
+                todo.description,
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
               SizedBox(height: 10),

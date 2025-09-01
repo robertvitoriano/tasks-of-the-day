@@ -18,12 +18,21 @@ class NewTask extends ConsumerStatefulWidget {
 }
 
 class _NewTaskState extends ConsumerState<NewTask> {
-  final TextEditingController _newTaskController = TextEditingController();
+  final _newTaskDescriptionController = TextEditingController();
+  final _newTaskTitleController = TextEditingController();
 
   void _saveTask() {
-    final text = _newTaskController.text.trim();
-    if (text.isNotEmpty) {
-      ref.read(dayListsProvider.notifier).addTask(widget.dayListId, text);
+    final description = _newTaskDescriptionController.text.trim();
+    final title = _newTaskTitleController.text.trim();
+
+    if (description.isNotEmpty) {
+          ref
+          .read(dayListsProvider.notifier)
+          .addTask(
+            dayListId: widget.dayListId,
+            description: description,
+            title: title,
+          );
       context.go('/day-list/${widget.dayListId}');
     }
   }
@@ -52,7 +61,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            context.go( '/day-list/${widget.dayListId}');
+            context.go('/day-list/${widget.dayListId}');
           },
         ),
       ),
@@ -72,13 +81,13 @@ class _NewTaskState extends ConsumerState<NewTask> {
                 style: TextStyle(fontSize: 36, color: Colors.black),
               ),
               CustomTextField(
-                controller: _newTaskController,
-                hintText: "Digite seu novo todo",
+                controller: _newTaskTitleController,
+                hintText: "Digite o titulo",
                 type: CustomTextFieldType.text,
                 label: "Task title",
               ),
               CustomTextField(
-                controller: _newTaskController,
+                controller: _newTaskDescriptionController,
                 hintText: "Digite seu novo todo",
                 type: CustomTextFieldType.text,
                 label: "Description",

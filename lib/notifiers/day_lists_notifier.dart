@@ -39,7 +39,11 @@ class DayListsNotifier extends Notifier<List<DayList>> {
     state = state.where((list) => list.id != id).toList();
   }
 
-  Future<void> addTask(String dayListId, String taskTitle) async {
+  Future<void> addTask({
+    required String dayListId,
+    required String title,
+    required String description,
+  }) async {
     final dayListIndex = state.indexWhere((list) => list.id == dayListId);
     if (dayListIndex == -1) throw Error();
     final dayListToUpdate = state[dayListIndex];
@@ -49,7 +53,8 @@ class DayListsNotifier extends Notifier<List<DayList>> {
         Task(
           id: _uuid.v4(),
           dayListId: dayListId,
-          title: taskTitle,
+          description: description,
+          title: title,
           done: false,
         ),
       ],
@@ -60,7 +65,6 @@ class DayListsNotifier extends Notifier<List<DayList>> {
       dayListsWithNewTask,
       ...state.sublist(dayListIndex + 1),
     ];
-
   }
 
   void toggleTask(String dayListId, String taskId) {
