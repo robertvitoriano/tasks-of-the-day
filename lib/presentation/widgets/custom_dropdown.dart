@@ -4,9 +4,14 @@ class CustomDropdown extends StatelessWidget {
   const CustomDropdown({
     super.key,
     required this.onSelect,
+    this.description,
+    this.labelText,
     this.selectedValue,
     this.items,
   });
+
+  final String? description;
+  final String? labelText;
 
   final String? selectedValue;
   final List<DropdownMenuItem<String>>? items;
@@ -18,7 +23,7 @@ class CustomDropdown extends StatelessWidget {
     return Expanded(
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
-          labelText: 'Priority',
+          labelText: labelText,
           border: OutlineInputBorder(),
         ),
         value: selectedValue,
@@ -26,7 +31,7 @@ class CustomDropdown extends StatelessWidget {
         onChanged: onSelect,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please select a category';
+            return description;
           }
           return null;
         },

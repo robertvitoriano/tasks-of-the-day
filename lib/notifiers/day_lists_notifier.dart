@@ -43,6 +43,8 @@ class DayListsNotifier extends Notifier<List<DayList>> {
     required String dayListId,
     required String title,
     required String description,
+    required String category,
+    required String priority,
   }) async {
     final dayListIndex = state.indexWhere((list) => list.id == dayListId);
     if (dayListIndex == -1) throw Error();
@@ -54,6 +56,8 @@ class DayListsNotifier extends Notifier<List<DayList>> {
           id: _uuid.v4(),
           dayListId: dayListId,
           description: description,
+          category: category,
+          priority: priority,
           title: title,
           done: false,
         ),

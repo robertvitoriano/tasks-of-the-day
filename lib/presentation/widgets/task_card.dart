@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/domain/entities/task.dart';
+import 'package:flutter_todo/domain/enums/priority_enum.dart';
 import 'package:flutter_todo/providers/day_lists_provider_provider.dart';
 
 class TaskCard extends ConsumerStatefulWidget {
@@ -26,7 +27,7 @@ class _TaskCard extends ConsumerState<TaskCard> {
         .firstWhere((d) => d.id == widget.taskListId)
         .tasks
         .firstWhere((t) => t.id == widget.id);
-        
+
     return Card(
       color: Colors.white,
       child: Padding(
@@ -67,6 +68,9 @@ class _TodoHeader extends StatelessWidget {
 }
 
 class _TodoCategory extends StatelessWidget {
+  const _TodoCategory({required this.category, required this.priority});
+  final String category;
+  final String priority;
   @override
   Widget build(Object context) {
     return Row(
@@ -74,8 +78,8 @@ class _TodoCategory extends StatelessWidget {
         Container(
           width: 10,
           height: 10,
-          decoration: const BoxDecoration(
-            color: Colors.red,
+          decoration: BoxDecoration(
+            color: PriorityLevel.toColor(priority),
             shape: BoxShape.circle,
           ),
         ),
@@ -86,8 +90,8 @@ class _TodoCategory extends StatelessWidget {
             color: Colors.grey,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: const Text(
-            "Generic",
+          child: Text(
+            category,
             style: TextStyle(color: Colors.white, fontSize: 12),
           ),
         ),
@@ -129,7 +133,7 @@ class _TodoContent extends StatelessWidget {
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
               SizedBox(height: 10),
-              _TodoCategory(),
+              _TodoCategory(category: todo.category, priority: todo.priority),
             ],
           ),
         ),

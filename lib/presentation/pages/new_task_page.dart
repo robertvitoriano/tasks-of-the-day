@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_todo/domain/entities/priority.dart';
+import 'package:flutter_todo/domain/enums/category_enum.dart';
+import 'package:flutter_todo/domain/enums/priority_enum.dart';
 import 'package:flutter_todo/presentation/widgets/custom_dropdown.dart';
 import 'package:flutter_todo/presentation/widgets/priority_item.dart';
 import 'package:flutter_todo/presentation/widgets/custom_text_field.dart';
@@ -26,33 +27,21 @@ class _NewTaskState extends ConsumerState<NewTask> {
     final title = _newTaskTitleController.text.trim();
 
     if (description.isNotEmpty) {
-          ref
+      ref
           .read(dayListsProvider.notifier)
           .addTask(
             dayListId: widget.dayListId,
             description: description,
+            category: selectedCategory!,
             title: title,
+            priority: selectedPriority!,
           );
       context.go('/day-list/${widget.dayListId}');
     }
   }
 
-  final List<Priority> priorities = [
-    Priority(label: 'Medium Priority', color: Colors.red),
-    Priority(label: 'Personal', color: Colors.red),
-    Priority(label: 'Shopping', color: Colors.red),
-    Priority(label: 'Health', color: Colors.red),
-    Priority(label: 'Others', color: Colors.red),
-  ];
-  final List<String> categories = [
-    'Medium Priority',
-    'Personal',
-    'Shopping',
-    'Health',
-    'Others',
-  ];
   String? selectedCategory;
-
+  String? selectedPriority;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,10 +92,10 @@ class _NewTaskState extends ConsumerState<NewTask> {
                         border: OutlineInputBorder(),
                       ),
                       value: selectedCategory,
-                      items: categories.map((category) {
+                      items: Category.values.map((category) {
                         return DropdownMenuItem<String>(
-                          value: category,
-                          child: Text(category),
+                          value: category.label,
+                          child: Text(category.label),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -124,8 +113,10 @@ class _NewTaskState extends ConsumerState<NewTask> {
                   ),
                   SizedBox(width: 80),
                   CustomDropdown(
-                    selectedValue: selectedCategory,
-                    items: priorities.map((priority) {
+                    selectedValue: selectedPriority,
+                    description: 'Please select a priority',
+                    labelText: 'Priority',
+                    items: PriorityLevel.values.map((priority) {
                       return DropdownMenuItem<String>(
                         value: priority.label,
                         child: PriorityItem(
@@ -136,7 +127,7 @@ class _NewTaskState extends ConsumerState<NewTask> {
                     }).toList(),
                     onSelect: (value) {
                       setState(() {
-                        selectedCategory = value;
+                        selectedPriority = value;
                       });
                     },
                   ),
