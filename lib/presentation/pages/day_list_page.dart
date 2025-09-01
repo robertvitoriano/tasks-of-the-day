@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/domain/entities/day_list.dart';
+import 'package:flutter_todo/domain/enums/month_enum.dart';
+import 'package:flutter_todo/domain/enums/weekday_enum.dart';
 import 'package:flutter_todo/presentation/widgets/custom_card.dart';
 import 'package:flutter_todo/presentation/widgets/page_wrapper.dart';
 import 'package:flutter_todo/presentation/widgets/tasks_list.dart';
@@ -26,9 +28,7 @@ class _DayListPage extends ConsumerState<DayListPage> {
       (d) => d.id == widget.dayListId,
     );
     final totalCount = selectedDayList.tasks.length;
-    final doneCount = selectedDayList.tasks
-        .where((t) => t.done == true)
-        .length;
+    final doneCount = selectedDayList.tasks.where((t) => t.done == true).length;
     final donePercentage = totalCount == 0
         ? 0.0
         : (doneCount / totalCount) * 100;
@@ -47,7 +47,11 @@ class _DayListPage extends ConsumerState<DayListPage> {
             children: [
               _Header(),
               SizedBox(height: 20),
-              _ProgressCard(donePercentage: donePercentage,doneCount: doneCount, totalCount: totalCount,),
+              _ProgressCard(
+                donePercentage: donePercentage,
+                doneCount: doneCount,
+                totalCount: totalCount,
+              ),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -78,6 +82,8 @@ class _DayListPage extends ConsumerState<DayListPage> {
 }
 
 class _Header extends StatelessWidget {
+  final DateTime now = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -96,7 +102,7 @@ class _Header extends StatelessWidget {
         ),
         SizedBox(width: 10),
         Text(
-          "Saturday, August 23, 2025",
+          '${Weekday.toWeekdayName(now.weekday)}, ${Month.toMonthName(now.month)} ${now.day}, ${now.year}',
           style: TextStyle(color: Colors.black, fontSize: 15),
         ),
       ],
@@ -105,7 +111,11 @@ class _Header extends StatelessWidget {
 }
 
 class _ProgressCard extends StatelessWidget {
-  const _ProgressCard({super.key, required this.donePercentage, required this.doneCount, required this.totalCount});
+  const _ProgressCard({
+    required this.donePercentage,
+    required this.doneCount,
+    required this.totalCount,
+  });
   final double donePercentage;
   final int doneCount;
   final int totalCount;
