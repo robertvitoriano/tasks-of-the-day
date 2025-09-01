@@ -45,7 +45,7 @@ class DayListsNotifier extends Notifier<List<DayList>> {
     required String description,
     required String category,
     required String priority,
-    required DateTime dueTime
+    required DateTime dueTime,
   }) async {
     final dayListIndex = state.indexWhere((list) => list.id == dayListId);
     if (dayListIndex == -1) throw Error();
@@ -73,10 +73,11 @@ class DayListsNotifier extends Notifier<List<DayList>> {
     ];
   }
 
-  void toggleTask(String dayListId, String taskId) {
+  Future<void> toggleTask(String dayListId, String taskId) async {
+    late final DayList dayListUpdated;
     state = state.map((list) {
       if (list.id == dayListId) {
-        return list.copyWith(
+        dayListUpdated = list.copyWith(
           tasks: list.tasks.map((task) {
             if (task.id == taskId) {
               return task.copyWith(done: !task.done);
@@ -84,9 +85,11 @@ class DayListsNotifier extends Notifier<List<DayList>> {
             return task;
           }).toList(),
         );
+        return dayListUpdated;
       }
       return list;
     }).toList();
+    await dayListRepository.storeDayList(dayList: dayListUpdated);
   }
 
   loadDayLists() {

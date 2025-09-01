@@ -16,8 +16,10 @@ class TaskCard extends ConsumerStatefulWidget {
 }
 
 class _TaskCard extends ConsumerState<TaskCard> {
-  void onChanged(String taskId, bool value) {
-    ref.read(dayListsProvider.notifier).toggleTask(widget.taskListId, taskId);
+  Future<void> onChanged(String taskId, bool value) async {
+    await ref
+        .read(dayListsProvider.notifier)
+        .toggleTask(widget.taskListId, taskId);
   }
 
   @override
